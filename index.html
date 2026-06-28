@@ -41,12 +41,15 @@
     }
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.8;
     font-size: 16px;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Header */
@@ -183,12 +186,132 @@
   /* Task list */
   .content input[type="checkbox"] { margin-right: 6px; }
 
-  /* Responsive */
+  /* ─── Floating TOC button (mobile only) ─── */
+  .toc-float {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    z-index: 1000;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    font-size: 20px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .toc-float:active { transform: scale(.92); }
+
+  /* ─── TOC overlay (mobile drawer) ─── */
+  .toc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0,0,0,.4);
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .toc-overlay.open { opacity: 1; }
+  .toc-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    background: var(--bg);
+    border-left: 1px solid var(--border);
+    padding: 24px 20px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+  }
+  .toc-overlay.open .toc-drawer { transform: translateX(0); }
+  .toc-drawer h2 {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .toc-drawer a {
+    display: block;
+    padding: 8px 0;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .toc-drawer a.toc-h3 { padding-left: 12px; font-size: 13px; }
+  .toc-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    font-size: 22px;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toc-close:hover { background: var(--code-bg); }
+
+  /* ─── Responsive: mobile ─── */
   @media (max-width: 768px) {
     .sidebar { display: none; }
-    .content { padding: 24px 16px 60px; }
-    .hero { padding: 32px 16px 28px; }
-    .hero h1 { font-size: 1.5rem; }
+    .toc-float { display: flex; }
+    .toc-overlay { display: block; }
+    .content {
+      padding: 20px 16px 80px;
+      max-width: 100%;
+    }
+    .hero {
+      padding: 28px 16px 24px;
+    }
+    .hero h1 {
+      font-size: 1.35rem;
+      line-height: 1.4;
+    }
+    .hero p {
+      font-size: .9rem;
+    }
+    .content h1 { font-size: 1.45rem; }
+    .content h2 { font-size: 1.2rem; margin-top: 36px; }
+    .content h3 { font-size: 1.05rem; }
+    .content h4 { font-size: .95rem; }
+    .content pre {
+      font-size: 12px;
+      padding: 12px 14px;
+      border-radius: 6px;
+    }
+    .content code {
+      font-size: .85em;
+      word-break: break-word;
+    }
+    .content table {
+      font-size: 12px;
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+    .content blockquote {
+      padding: 10px 14px;
+      font-size: .9em;
+    }
+    .content ul, .content ol { padding-left: 20px; }
   }
 
   /* Print */
@@ -199,6 +322,14 @@
 </style>
 </head>
 <body>
+
+<button class="toc-float" id="tocFloat" aria-label="目录" title="目录">☰</button>
+
+<div class="toc-overlay" id="tocOverlay">
+  <div class="toc-drawer" id="tocDrawer">
+    <button class="toc-close" id="tocClose" aria-label="关闭">✕</button>
+  </div>
+</div>
 
 <div class="hero">
   <h1>📘 GitHub 完全指南</h1>
@@ -292,6 +423,46 @@
   }, { rootMargin: '-80px 0px -80% 0px' });
 
   headings.forEach(h => observer.observe(h));
+
+  // ─── Mobile TOC ───
+  const tocFloat = document.getElementById('tocFloat');
+  const tocOverlay = document.getElementById('tocOverlay');
+  const tocDrawer = document.getElementById('tocDrawer');
+  const tocClose = document.getElementById('tocClose');
+
+  // Populate mobile drawer with same TOC content
+  const drawerContent = toc.innerHTML;
+  tocDrawer.insertAdjacentHTML('beforeend', drawerContent);
+
+  function openToc() {
+    tocOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeToc() {
+    tocOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  tocFloat.addEventListener('click', openToc);
+  tocClose.addEventListener('click', closeToc);
+  tocOverlay.addEventListener('click', function(e) {
+    if (e.target === tocOverlay) closeToc();
+  });
+  // Close drawer when a TOC link is clicked
+  tocDrawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', closeToc);
+  });
+
+  // ─── Wrap tables in scrollable containers for mobile ───
+  document.querySelectorAll('.content table').forEach(table => {
+    if (!table.parentElement.classList.contains('table-wrap')) {
+      const wrap = document.createElement('div');
+      wrap.className = 'table-wrap';
+      wrap.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;';
+      table.parentNode.insertBefore(wrap, table);
+      wrap.appendChild(table);
+    }
+  });
 })();
 </script>
 
