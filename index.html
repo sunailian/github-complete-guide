@@ -224,12 +224,18 @@
     smartLists: true
   });
 
-  // Custom renderer for heading IDs
+  // Custom renderer for heading IDs (matches GitHub behavior)
   const renderer = new marked.Renderer();
   renderer.heading = function(text, level, raw) {
-    const id = raw.toLowerCase()
-      .replace(/<[^>]*>/g, '')
+    // Strip HTML tags from raw text
+    let id = raw.replace(/<[^>]*>/g, '')
+      .toLowerCase()
+      // Strip Chinese punctuation (GitHub strips these, doesn't replace with hyphens)
+      .replace(/[、，。：；！？「」『』【】《》（）""''、\,\.:;!\?\(\)\[\]{}'"“”]+/g, '')
+      // Replace remaining whitespace and non-alphanum (except CJK) with hyphens
       .replace(/[^\w\u4e00-\u9fff]+/g, '-')
+      // Clean up leading/trailing hyphens and collapsing multiple hyphens
+      .replace(/-+/g, '-')
       .replace(/^-+|-+$/g, '');
     return `<h${level} id="${id}">${text}</h${level}>`;
   };
@@ -241,7 +247,25 @@
   const main = document.getElementById('main');
   main.innerHTML = html;
 
-  // Build TOC from h2 and h3 in content
+  // Fix in-body TOC links to match generated heading IDs
+  // Build heading text → id map from rendered DOM
+  const headingMap = new Map();
+  main.querySelectorAll('h2, h3').forEach(h => {
+    headingMap.set(h.textContent.trim(), h.id);
+  });
+  // Find and fix TOC links (first <ul> containing # anchor links in content)
+  const tocList = main.querySelector('ul');
+  if (tocList) {
+    tocList.querySelectorAll('a[href^="#"]').forEach(a => {
+      const linkText = a.textContent.trim();
+      const targetId = headingMap.get(linkText);
+      if (targetId) {
+        a.setAttribute('href', '#' + targetId);
+      }
+    });
+  }
+
+  // Build sidebar TOC from h2 and h3 in content
   const toc = document.getElementById('toc');
   const headings = main.querySelectorAll('h2, h3');
   let tocHtml = '<h2>目录</h2>';
