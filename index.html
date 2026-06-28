@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 完全指南 — 从原理到实战的 Git &amp; GitHub 完整教程</title>
+<meta name="description" content="一本面向开发者的 Git &amp; GitHub 从原理到实战的完整手册，涵盖 Git 内核、全量命令、GitHub 平台、工作流选型、高级话题。">
+<meta property="og:title" content="GitHub 完全指南">
+<meta property="og:description" content="从原理到实战的 Git &amp; GitHub 完整教程">
+<meta property="og:type" content="website">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #1a1a2e;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --code-bg: #f3f4f6;
+    --link: #2563eb;
+    --link-hover: #1d4ed8;
+    --accent: #2563eb;
+    --table-stripe: #f9fafb;
+    --blockquote: #f0f9ff;
+    --blockquote-border: #3b82f6;
+    --toc-bg: #f8fafc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f172a;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #334155;
+      --code-bg: #1e293b;
+      --link: #60a5fa;
+      --link-hover: #93bbfd;
+      --accent: #3b82f6;
+      --table-stripe: #1e293b;
+      --blockquote: #0c1929;
+      --blockquote-border: #3b82f6;
+      --toc-bg: #1e293b;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* Header */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    padding: 48px 24px 40px;
+    text-align: center;
+    border-bottom: 4px solid var(--accent);
+  }
+  .hero h1 { font-size: 2rem; margin-bottom: 8px; font-weight: 800; }
+  .hero p { font-size: 1.05rem; opacity: .8; max-width: 640px; margin: 0 auto; }
+
+  /* Layout */
+  .layout {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  /* Sidebar TOC */
+  .sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 24px 16px 24px 24px;
+    border-right: 1px solid var(--border);
+    background: var(--toc-bg);
+    font-size: 14px;
+  }
+  .sidebar h2 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .sidebar a {
+    display: block;
+    padding: 5px 0;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .15s;
+  }
+  .sidebar a:hover, .sidebar a.active { color: var(--link); }
+  .sidebar a.toc-h3 { padding-left: 16px; font-size: 13px; }
+
+  /* Main content */
+  .content {
+    flex: 1;
+    min-width: 0;
+    padding: 48px 48px 80px;
+    max-width: 800px;
+  }
+
+  /* Typography */
+  .content h1 { font-size: 2rem; margin: 16px 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+  .content h2 { font-size: 1.5rem; margin: 48px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  .content h3 { font-size: 1.2rem; margin: 32px 0 12px; }
+  .content h4 { font-size: 1.05rem; margin: 20px 0 8px; }
+  .content p { margin: 12px 0; }
+  .content a { color: var(--link); text-decoration: none; }
+  .content a:hover { color: var(--link-hover); text-decoration: underline; }
+  .content strong { font-weight: 700; }
+  .content em { font-style: italic; }
+  .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* Code */
+  .content code {
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+    font-size: .9em;
+  }
+  .content pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .content pre code {
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+  }
+
+  /* Tables */
+  .content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .content th {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .content td {
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+  }
+  .content tr:nth-child(even) td { background: var(--table-stripe); }
+
+  /* Blockquote */
+  .content blockquote {
+    background: var(--blockquote);
+    border-left: 4px solid var(--blockquote-border);
+    margin: 16px 0;
+    padding: 12px 20px;
+    border-radius: 0 6px 6px 0;
+    color: var(--muted);
+    font-size: .95em;
+  }
+  .content blockquote p { margin: 6px 0; }
+
+  /* Lists */
+  .content ul, .content ol { margin: 12px 0; padding-left: 24px; }
+  .content li { margin: 4px 0; }
+  .content li > ul, .content li > ol { margin: 4px 0; }
+
+  /* Task list */
+  .content input[type="checkbox"] { margin-right: 6px; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .content { padding: 24px 16px 60px; }
+    .hero { padding: 32px 16px 28px; }
+    .hero h1 { font-size: 1.5rem; }
+  }
+
+  /* Print */
+  @media print {
+    .sidebar { display: none; }
+    .content { max-width: 100%; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>📘 GitHub 完全指南</h1>
+  <p>从原理到实战的 Git &amp; GitHub 完整教程 — 不只是命令，更是理解。</p>
+</div>
+
+<div class="layout">
+  <nav class="sidebar" id="toc"></nav>
+  <main class="content" id="main"></main>
+</div>
+
+<script>
+(async () => {
+  const resp = await fetch('README.md');
+  const md = await resp.text();
+
+  // Configure marked
+  marked.setOptions({
+    gfm: true,
+    breaks: false,
+    headerIds: true,
+    mangle: false,
+    smartLists: true
+  });
+
+  // Custom renderer for heading IDs
+  const renderer = new marked.Renderer();
+  renderer.heading = function(text, level, raw) {
+    const id = raw.toLowerCase()
+      .replace(/<[^>]*>/g, '')
+      .replace(/[^\w\u4e00-\u9fff]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    return `<h${level} id="${id}">${text}</h${level}>`;
+  };
+
+  // Render markdown
+  const html = marked.parse(md, { renderer });
+
+  // Extract frontmatter content (first <h1> is hero, already shown)
+  const main = document.getElementById('main');
+  main.innerHTML = html;
+
+  // Build TOC from h2 and h3 in content
+  const toc = document.getElementById('toc');
+  const headings = main.querySelectorAll('h2, h3');
+  let tocHtml = '<h2>目录</h2>';
+
+  headings.forEach(h => {
+    const id = h.id;
+    const text = h.textContent;
+    const cls = h.tagName === 'H3' ? 'toc-h3' : '';
+    tocHtml += `<a href="#${id}" class="${cls}">${text}</a>`;
+  });
+
+  toc.innerHTML = tocHtml;
+
+  // Highlight active TOC item on scroll
+  const tocLinks = toc.querySelectorAll('a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tocLinks.forEach(a => a.classList.remove('active'));
+        const link = toc.querySelector(`a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-80px 0px -80% 0px' });
+
+  headings.forEach(h => observer.observe(h));
+})();
+</script>
+
+</body>
+</html>
