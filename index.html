@@ -8,7 +8,6 @@
 <meta property="og:title" content="GitHub 完全指南">
 <meta property="og:description" content="从原理到实战的 Git &amp; GitHub 完整教程">
 <meta property="og:type" content="website">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
   :root {
     --bg: #ffffff;
@@ -51,8 +50,6 @@
     overflow-x: hidden;
     -webkit-tap-highlight-color: transparent;
   }
-
-  /* Header */
   .hero {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     color: #fff;
@@ -62,54 +59,17 @@
   }
   .hero h1 { font-size: 2rem; margin-bottom: 8px; font-weight: 800; }
   .hero p { font-size: 1.05rem; opacity: .8; max-width: 640px; margin: 0 auto; }
-
-  /* Layout */
-  .layout {
-    display: flex;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-  }
-
-  /* Sidebar TOC */
+  .layout { display: flex; max-width: 1200px; margin: 0 auto; position: relative; }
   .sidebar {
-    width: 260px;
-    flex-shrink: 0;
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    padding: 24px 16px 24px 24px;
-    border-right: 1px solid var(--border);
-    background: var(--toc-bg);
-    font-size: 14px;
+    width: 260px; flex-shrink: 0; position: sticky; top: 0; height: 100vh;
+    overflow-y: auto; padding: 24px 16px 24px 24px;
+    border-right: 1px solid var(--border); background: var(--toc-bg); font-size: 14px;
   }
-  .sidebar h2 {
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    margin-bottom: 12px;
-  }
-  .sidebar a {
-    display: block;
-    padding: 5px 0;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color .15s;
-  }
+  .sidebar h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
+  .sidebar a { display: block; padding: 5px 0; color: var(--muted); text-decoration: none; transition: color .15s; }
   .sidebar a:hover, .sidebar a.active { color: var(--link); }
   .sidebar a.toc-h3 { padding-left: 16px; font-size: 13px; }
-
-  /* Main content */
-  .content {
-    flex: 1;
-    min-width: 0;
-    padding: 48px 48px 80px;
-    max-width: 800px;
-  }
-
-  /* Typography */
+  .content { flex: 1; min-width: 0; padding: 48px 48px 80px; max-width: 800px; }
   .content h1 { font-size: 2rem; margin: 16px 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
   .content h2 { font-size: 1.5rem; margin: 48px 0 16px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
   .content h3 { font-size: 1.2rem; margin: 32px 0 12px; }
@@ -120,201 +80,72 @@
   .content strong { font-weight: 700; }
   .content em { font-style: italic; }
   .content hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
-
-  /* Code */
   .content code {
-    background: var(--code-bg);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
-    font-size: .9em;
+    background: var(--code-bg); padding: 2px 6px; border-radius: 4px;
+    font-family: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", Consolas, monospace; font-size: .9em;
   }
   .content pre {
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px 20px;
-    overflow-x: auto;
-    margin: 16px 0;
-    font-size: 14px;
-    line-height: 1.6;
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px 20px; overflow-x: auto; margin: 16px 0; font-size: 14px; line-height: 1.6;
   }
-  .content pre code {
-    background: none;
-    padding: 0;
-    border-radius: 0;
-    font-size: inherit;
-  }
-
-  /* Tables */
-  .content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 16px 0;
-    font-size: 14px;
-  }
-  .content th {
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-    padding: 10px 14px;
-    text-align: left;
-    font-weight: 600;
-  }
-  .content td {
-    border: 1px solid var(--border);
-    padding: 8px 14px;
-  }
+  .content pre code { background: none; padding: 0; border-radius: 0; font-size: inherit; }
+  .content table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  .content th { background: var(--code-bg); border: 1px solid var(--border); padding: 10px 14px; text-align: left; font-weight: 600; }
+  .content td { border: 1px solid var(--border); padding: 8px 14px; }
   .content tr:nth-child(even) td { background: var(--table-stripe); }
-
-  /* Blockquote */
   .content blockquote {
-    background: var(--blockquote);
-    border-left: 4px solid var(--blockquote-border);
-    margin: 16px 0;
-    padding: 12px 20px;
-    border-radius: 0 6px 6px 0;
-    color: var(--muted);
-    font-size: .95em;
+    background: var(--blockquote); border-left: 4px solid var(--blockquote-border);
+    margin: 16px 0; padding: 12px 20px; border-radius: 0 6px 6px 0; color: var(--muted); font-size: .95em;
   }
   .content blockquote p { margin: 6px 0; }
-
-  /* Lists */
   .content ul, .content ol { margin: 12px 0; padding-left: 24px; }
   .content li { margin: 4px 0; }
   .content li > ul, .content li > ol { margin: 4px 0; }
-
-  /* Task list */
   .content input[type="checkbox"] { margin-right: 6px; }
-
-  /* ─── Floating TOC button (mobile only) ─── */
+  /* Mobile TOC */
   .toc-float {
-    display: none;
-    position: fixed;
-    bottom: 24px;
-    right: 20px;
-    z-index: 1000;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    box-shadow: 0 4px 16px rgba(0,0,0,.25);
-    font-size: 20px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
+    display: none; position: fixed; bottom: 24px; right: 20px; z-index: 1000;
+    width: 48px; height: 48px; border-radius: 50%; background: var(--accent);
+    color: #fff; border: none; box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    font-size: 20px; cursor: pointer; align-items: center; justify-content: center;
     transition: transform .2s, box-shadow .2s;
   }
   .toc-float:active { transform: scale(.92); }
-
-  /* ─── TOC overlay (mobile drawer) ─── */
   .toc-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 2000;
-    background: rgba(0,0,0,.4);
-    opacity: 0;
-    transition: opacity .25s;
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,.4); opacity: 0; transition: opacity .25s;
   }
   .toc-overlay.open { opacity: 1; }
   .toc-drawer {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 280px;
-    max-width: 85vw;
-    height: 100vh;
-    background: var(--bg);
-    border-left: 1px solid var(--border);
-    padding: 24px 20px;
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    position: fixed; top: 0; right: 0; width: 280px; max-width: 85vw;
+    height: 100vh; background: var(--bg); border-left: 1px solid var(--border);
+    padding: 24px 20px; overflow-y: auto;
+    transform: translateX(100%); transition: transform .3s cubic-bezier(.4,0,.2,1);
   }
   .toc-overlay.open .toc-drawer { transform: translateX(0); }
-  .toc-drawer h2 {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--muted);
-    margin-bottom: 16px;
-  }
-  .toc-drawer a {
-    display: block;
-    padding: 8px 0;
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 14px;
-    border-bottom: 1px solid var(--border);
-  }
+  .toc-drawer h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 16px; }
+  .toc-drawer a { display: block; padding: 8px 0; color: var(--muted); text-decoration: none; font-size: 14px; border-bottom: 1px solid var(--border); }
   .toc-drawer a.toc-h3 { padding-left: 12px; font-size: 13px; }
-  .toc-close {
-    position: absolute;
-    top: 12px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: none;
-    font-size: 22px;
-    color: var(--muted);
-    cursor: pointer;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  .toc-close { position: absolute; top: 12px; right: 16px; width: 32px; height: 32px; border: none; background: none; font-size: 22px; color: var(--muted); cursor: pointer; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
   .toc-close:hover { background: var(--code-bg); }
-
-  /* ─── Responsive: mobile ─── */
   @media (max-width: 768px) {
     .sidebar { display: none; }
     .toc-float { display: flex; }
     .toc-overlay { display: block; }
-    .content {
-      padding: 20px 16px 80px;
-      max-width: 100%;
-    }
-    .hero {
-      padding: 28px 16px 24px;
-    }
-    .hero h1 {
-      font-size: 1.35rem;
-      line-height: 1.4;
-    }
-    .hero p {
-      font-size: .9rem;
-    }
+    .content { padding: 20px 16px 80px; max-width: 100%; }
+    .hero { padding: 28px 16px 24px; }
+    .hero h1 { font-size: 1.35rem; line-height: 1.4; }
+    .hero p { font-size: .9rem; }
     .content h1 { font-size: 1.45rem; }
     .content h2 { font-size: 1.2rem; margin-top: 36px; }
     .content h3 { font-size: 1.05rem; }
     .content h4 { font-size: .95rem; }
-    .content pre {
-      font-size: 12px;
-      padding: 12px 14px;
-      border-radius: 6px;
-    }
-    .content code {
-      font-size: .85em;
-      word-break: break-word;
-    }
-    .content table {
-      font-size: 12px;
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-    }
-    .content blockquote {
-      padding: 10px 14px;
-      font-size: .9em;
-    }
+    .content pre { font-size: 12px; padding: 12px 14px; border-radius: 6px; }
+    .content code { font-size: .85em; word-break: break-word; }
+    .content table { font-size: 12px; display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+    .content blockquote { padding: 10px 14px; font-size: .9em; }
     .content ul, .content ol { padding-left: 20px; }
   }
-
-  /* Print */
   @media print {
     .sidebar { display: none; }
     .content { max-width: 100%; padding: 0; }
@@ -323,140 +154,1467 @@
 </head>
 <body>
 
-<button class="toc-float" id="tocFloat" aria-label="目录" title="目录">☰</button>
-
-<div class="toc-overlay" id="tocOverlay">
-  <div class="toc-drawer" id="tocDrawer">
-    <button class="toc-close" id="tocClose" aria-label="关闭">✕</button>
-  </div>
-</div>
-
 <div class="hero">
   <h1>📘 GitHub 完全指南</h1>
   <p>从原理到实战的 Git &amp; GitHub 完整教程 — 不只是命令，更是理解。</p>
 </div>
 
 <div class="layout">
-  <nav class="sidebar" id="toc"></nav>
-  <main class="content" id="main"></main>
+  <nav class="sidebar" id="toc">
+<h2>目录</h2>
+<a href="#目录" class="">目录</a>
+<a href="#一版本控制的本质" class="">一、版本控制的本质</a>
+<a href="#11-为什么需要版本控制" class="toc-h3">1.1 为什么需要版本控制</a>
+<a href="#12-git-的设计哲学快照-vs-差异" class="toc-h3">1.2 Git 的设计哲学：快照 vs 差异</a>
+<a href="#13-分布式-vs-集中式" class="toc-h3">1.3 分布式 vs 集中式</a>
+<a href="#二git-核心原理" class="">二、Git 核心原理</a>
+<a href="#21-git-目录解剖" class="toc-h3">2.1 .git 目录解剖</a>
+<a href="#22-三种状态和三个区域" class="toc-h3">2.2 三种状态和三个区域</a>
+<a href="#23-四对象模型" class="toc-h3">2.3 四对象模型</a>
+<a href="#24-分支的本质" class="toc-h3">2.4 分支的本质</a>
+<a href="#三git-基础命令" class="">三、Git 基础命令</a>
+<a href="#31-init-clone-仓库的诞生" class="toc-h3">3.1 init / clone — 仓库的诞生</a>
+<a href="#32-add-commit-快照的生成" class="toc-h3">3.2 add / commit — 快照的生成</a>
+<a href="#33-status-log-diff-状态感知" class="toc-h3">3.3 status / log / diff — 状态感知</a>
+<a href="#34-branch-checkout-switch-分支操作" class="toc-h3">3.4 branch / checkout / switch — 分支操作</a>
+<a href="#35-merge-rebase-合并策略详解" class="toc-h3">3.5 merge / rebase — 合并策略详解</a>
+<a href="#36-reset-revert-restore-撤销的艺术" class="toc-h3">3.6 reset / revert / restore — 撤销的艺术</a>
+<a href="#37-stash-cherry-pick-灵活工具箱" class="toc-h3">3.7 stash / cherry-pick — 灵活工具箱</a>
+<a href="#38-tag-里程碑标记" class="toc-h3">3.8 tag — 里程碑标记</a>
+<a href="#四git-远程协作" class="">四、Git 远程协作</a>
+<a href="#41-remote-fetch-pull-push-同步机制" class="toc-h3">4.1 remote / fetch / pull / push — 同步机制</a>
+<a href="#42-fork-vs-clone-vs-branch-协作模式" class="toc-h3">4.2 fork vs clone vs branch — 协作模式</a>
+<a href="#43-冲突解决实战" class="toc-h3">4.3 冲突解决实战</a>
+<a href="#五github-平台深度使用" class="">五、GitHub 平台深度使用</a>
+<a href="#51-issues-任务追踪" class="toc-h3">5.1 Issues — 任务追踪</a>
+<a href="#52-pull-requests-代码审查流" class="toc-h3">5.2 Pull Requests — 代码审查流</a>
+<a href="#53-actions-ci-自动化流水线" class="toc-h3">5.3 Actions / CI — 自动化流水线</a>
+<a href="#54-projects-项目管理" class="toc-h3">5.4 Projects — 项目管理</a>
+<a href="#55-releases-版本发布" class="toc-h3">5.5 Releases — 版本发布</a>
+<a href="#56-安全分支保护" class="toc-h3">5.6 安全：分支保护</a>
+<a href="#六github-cligh实战" class="">六、GitHub CLI（gh）实战</a>
+<a href="#61-安装与登录" class="toc-h3">6.1 安装与登录</a>
+<a href="#62-常用命令速查" class="toc-h3">6.2 常用命令速查</a>
+<a href="#七工作流实战" class="">七、工作流实战</a>
+<a href="#71-git-flow" class="toc-h3">7.1 Git Flow</a>
+<a href="#72-github-flow" class="toc-h3">7.2 GitHub Flow</a>
+<a href="#73-trunk-based-development" class="toc-h3">7.3 Trunk-Based Development</a>
+<a href="#74-如何选型" class="toc-h3">7.4 如何选型</a>
+<a href="#八高级话题" class="">八、高级话题</a>
+<a href="#81-gitignore-与-gitattributes" class="toc-h3">8.1 .gitignore 与 .gitattributes</a>
+<a href="#82-submodule-subtree" class="toc-h3">8.2 submodule / subtree</a>
+<a href="#83-reflog-后悔药" class="toc-h3">8.3 reflog — 后悔药</a>
+<a href="#84-bisect-二分排错" class="toc-h3">8.4 bisect — 二分排错</a>
+<a href="#85-hooks-自动化钩子" class="toc-h3">8.5 hooks — 自动化钩子</a>
+<a href="#86-大文件处理git-lfs" class="toc-h3">8.6 大文件处理（Git LFS）</a>
+<a href="#九踩坑集锦与最佳实践" class="">九、踩坑集锦与最佳实践</a>
+<a href="#91-常见错误与修复" class="toc-h3">9.1 常见错误与修复</a>
+<a href="#92-commit-message-规范" class="toc-h3">9.2 Commit Message 规范</a>
+<a href="#93-团队协作建议" class="toc-h3">9.3 团队协作建议</a>
+<a href="#94-gitconfig-推荐配置" class="toc-h3">9.4 .gitconfig 推荐配置</a>
+<a href="#附录速查表" class="">附录：速查表</a>
+<a href="#撤销操作" class="toc-h3">撤销操作</a>
+<a href="#分支操作" class="toc-h3">分支操作</a>
+<a href="#远程操作" class="toc-h3">远程操作</a>
+<a href="#许可" class="">许可</a>
+  </nav>
+  <main class="content" id="main">
+<h2 id="目录">目录</h2>
+<ul>
+<li><a href="#一版本控制的本质">一、版本控制的本质</a></li>
+<li><a href="#二git-核心原理">二、Git 核心原理</a></li>
+<li><a href="#三git-基础命令">三、Git 基础命令</a></li>
+<li><a href="#四git-远程协作">四、Git 远程协作</a></li>
+<li><a href="#五github-平台深度使用">五、GitHub 平台深度使用</a></li>
+<li><a href="#六github-cligh-实战">六、GitHub CLI（gh）实战</a></li>
+<li><a href="#七工作流实战">七、工作流实战</a></li>
+<li><a href="#八高级话题">八、高级话题</a></li>
+<li><a href="#九踩坑集锦与最佳实践">九、踩坑集锦与最佳实践</a></li>
+</ul>
+<hr />
+<h2 id="一版本控制的本质">一、版本控制的本质</h2>
+<h3 id="11-为什么需要版本控制">1.1 为什么需要版本控制</h3>
+<p>想象你正在写一篇论文：</p>
+<pre><code>论文_v1.docx
+论文_v2_导师修改.docx
+论文_v3_最终版.docx
+论文_v3_最终版_真的最终.docx
+论文_v3_最终版_再也不改了.docx
+</code></pre>
+<p>这就是没有版本控制的噩梦。版本控制系统（VCS，Version Control System）解决了三个核心问题：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>回溯</strong> — 改了哪些、谁改的、为什么改</td>
+<td>每次保存生成一个快照，附带元信息</td>
+</tr>
+<tr>
+<td><strong>协作</strong> — 多人同时改同一个文件</td>
+<td>分支 + 合并机制，独立工作后集成</td>
+</tr>
+<tr>
+<td><strong>备份</strong> — 电脑坏了、文件丢了</td>
+<td>分布式架构，每个克隆都是完整备份</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-git-的设计哲学快照-vs-差异">1.2 Git 的设计哲学：快照 vs 差异</h3>
+<p>大多数 VCS（如 SVN）以<strong>文件差异</strong>（delta）方式存储历史：</p>
+<pre><code>文件 v1 → [差异] → 文件 v2 → [差异] → 文件 v3
+</code></pre>
+<p>Git 则完全不同 — <strong>每次 commit 是整个项目的完整快照</strong>：</p>
+<pre><code>commit1: 文件A(v1) 文件B(v1) 文件C(v1)
+commit2: 文件A(v2) 文件B(v1) 文件C(v1)  ← 只变了一个文件，但存了整个状态
+</code></pre>
+<blockquote>
+<p><strong>为什么要这么“浪费”？</strong> 因为读取历史时不需要反向计算差异链，切换版本是 O(1) 操作。而且 Git 会对未变化的文件使用符号链接（通过 <code>.git/objects</code> 的 hash 去重），实际磁盘占用并不大。</p>
+</blockquote>
+<h3 id="13-分布式-vs-集中式">1.3 分布式 vs 集中式</h3>
+<pre><code>集中式（SVN）：               分布式（Git）：
+┌──────────┐                ┌──────────┐
+│ 中央仓库  │ ← 唯一真理来源    │ 远程仓库  │
+└────┬─────┘                └────┬─────┘
+     │                          │
+┌────┴────┐              ┌──────┼──────┐
+│ 工作副本  │             │ 本地仓库  │ 本地仓库  │
+└─────────┘              └──────┴──────┘
+</code></pre>
+<p><strong>分布式意味着：</strong>
+- 每个开发者拥有<strong>完整的历史副本</strong>，不只是最新版本
+- 离线可 commit、branch、merge、view log
+- 没有单点故障 — 任何克隆都可以恢复整个项目
+- 工作流灵活 — 不需要中央服务器也能协作（Linux 内核就是这样开发的）</p>
+<hr />
+<h2 id="二git-核心原理">二、Git 核心原理</h2>
+<h3 id="21-git-目录解剖">2.1 <code>.git</code> 目录解剖</h3>
+<p>当你执行 <code>git init</code> 时，Git 在当前目录创建一个 <code>.git</code> 文件夹。<strong>这是 Git 的全部</strong> — 删除它就等于删除所有版本历史。</p>
+<pre><code>.git/
+├── HEAD              # 指向当前分支的引用（如 ref: refs/heads/main）
+├── config            # 仓库级别的配置
+├── objects/          # 对象数据库（核心！所有内容存在这里）
+│   ├── xx/           # 以 hash 前两位为目录名
+│   │   └── xxxx...   # 实际对象文件（blob / tree / commit）
+│   ├── info/
+│   └── pack/         # 打包文件（垃圾回收后生成）
+├── refs/
+│   ├── heads/        # 分支引用（每个分支一个文件，内容是 commit hash）
+│   ├── tags/         # 标签引用
+│   └── remotes/      # 远程分支引用
+├── index             # 暂存区（staging area）
+└── logs/             # 引用日志（reflog）
+</code></pre>
+<h3 id="22-三种状态和三个区域">2.2 三种状态和三个区域</h3>
+<p>Git 中的文件永远处于三种状态之一：</p>
+<pre><code>工作目录               暂存区                  Git 仓库
+(Working Dir)    →    (Staging Area)    →    (Repository)
+                        index                  objects/
+   modified            staged                 committed
+</code></pre>
+<pre><code class="language-bash"># 查看文件状态
+git status
+
+# 典型输出解读：
+# Untracked  → 新文件，Git 不知道它的存在
+# Modified   → 已跟踪的文件被修改了，但还没暂存
+# Staged     → 修改已被加入暂存区，等待 commit
+# Committed  → 安全存入本地数据库
+</code></pre>
+<h3 id="23-四对象模型">2.3 四对象模型</h3>
+<p>Git 内部只有四种对象类型，理解它们就理解了 Git：</p>
+<pre><code>┌──────────────────────────────────────┐
+│              commit                   │
+│  tree:    &lt;tree-hash&gt;                │
+│  parent:  &lt;parent-commit-hash&gt;       │
+│  author:  Frank &lt;sunangie@126.com&gt;   │
+│  message: &quot;Add login feature&quot;        │
+└──────────┬───────────────────────────┘
+           │
+    ┌──────▼──────────┐
+    │      tree        │
+    │  src/    → &lt;hash&gt;│  ← 目录（tree 指向 blob 或 tree）
+    │  README  → &lt;hash&gt;│
+    └──────┬──────────┘
+           │
+    ┌──────▼──────────┐
+    │      blob        │  ← 文件内容
+    │  &quot;print('hello') │     注意：blob 只存内容，不存文件名！
+    │   world'\\&quot;       │     文件名存在 tree 对象里
+    └─────────────────┘
+</code></pre>
+<p><strong>底层验证：</strong></p>
+<pre><code class="language-bash"># 查看一个 commit 的内部结构
+git cat-file -p HEAD
+
+# 输出示例：
+# tree 4b825dc642cb6eb9a060e54bf8993c2c4ea9a8e2
+# parent 1a2b3c4d5e6f...
+# author Frank &lt;sunangie@126.com&gt; 1700000000 +0800
+# committer Frank &lt;sunangie@126.com&gt; 1700000000 +0800
+#
+# Add login feature
+
+# 继续深入，查看 tree 对象
+git cat-file -p 4b825dc6
+
+# 输出：
+# 100644 blob e69de29bb2...    README.md
+# 040000 tree a1b2c3d4e5...    src
+
+# 再深入，查看 blob 内容
+git cat-file -p e69de29b
+</code></pre>
+<blockquote>
+<p><strong>关键洞察：</strong> commit 指向 tree，tree 指向 blob 或 tree。这是一个<strong>内容寻址</strong>的文件系统 — 你可以把 Git 看作一个迷你文件系统，所有内容通过 SHA-1 hash 寻址。</p>
+</blockquote>
+<h3 id="24-分支的本质">2.4 分支的本质</h3>
+<p><strong>分支只是一个指向 commit 的指针。</strong></p>
+<pre><code># .git/refs/heads/main 的内容：
+$ cat .git/refs/heads/main
+1a2b3c4d5e6f7890abcdef1234567890abcdef12
+</code></pre>
+<p>就这么简单 — 一个 40 字符的 SHA-1 hash，存在一个文件里。</p>
+<pre><code>main
+ │
+ ▼
+A ← B ← C ← D
+         ▲
+         │
+      feature
+</code></pre>
+<ul>
+<li><code>main</code> 指向 D</li>
+<li><code>feature</code> 也指向 D（刚创建的）</li>
+<li>当你 checkout 到 <code>feature</code> 并 commit，<code>feature</code> 就会前移</li>
+<li><code>main</code> 不动，直到 merge 或 commit</li>
+</ul>
+<p><strong>HEAD 是什么？</strong> HEAD 是一个特殊的指针，指向你当前所在的 commit。通常它指向一个分支（detached HEAD 时直接指向 commit）。</p>
+<pre><code class="language-bash"># HEAD 的内容（通常是符号引用）
+$ cat .git/HEAD
+ref: refs/heads/feature/login
+
+# detached HEAD 时直接指向 commit
+$ cat .git/HEAD
+1a2b3c4d5e6f7890abcdef1234567890abcdef12
+</code></pre>
+<hr />
+<h2 id="三git-基础命令">三、Git 基础命令</h2>
+<h3 id="31-init-clone-仓库的诞生">3.1 init / clone — 仓库的诞生</h3>
+<pre><code class="language-bash"># 从零开始：在当前目录初始化
+git init
+git init my-project    # 在 my-project/ 下初始化
+
+# 从远程获取：克隆完整仓库
+git clone https://github.com/user/repo.git
+git clone git@github.com:user/repo.git          # SSH（推荐）
+git clone git@github.com:user/repo.git my-dir   # 指定目录名
+git clone --depth 1 git@github.com:user/repo.git # 浅克隆（只要最新版本）
+git clone --branch develop git@github.com:user/repo.git # 克隆指定分支
+</code></pre>
+<blockquote>
+<p><strong>浅克隆（--depth 1）：</strong> 只下载最新一个 commit，不下载历史。适合 CI 环境或大型仓库。注意：浅克隆不能 push 回原仓库（历史不完整），需要先 <code>git fetch --unshallow</code>。</p>
+</blockquote>
+<h3 id="32-add-commit-快照的生成">3.2 add / commit — 快照的生成</h3>
+<pre><code class="language-bash"># 将修改加入暂存区
+git add file.txt              # 添加单个文件
+git add src/                  # 添加整个目录
+git add .                     # 添加当前目录所有修改
+git add -A                    # 添加所有修改（包括删除）
+git add -p                    # 交互式暂存，逐块选择（推荐！）
+
+# 提交快照
+git commit -m &quot;feat: add login feature&quot;
+git commit -a -m &quot;fix: correct typo&quot;        # 跳过 add，直接 commit 所有已跟踪文件的修改
+git commit --amend                           # 修改最后一次 commit（慎用，见下方说明）
+</code></pre>
+<p><strong><code>git add -p</code> 实战 — 最被低估的命令：</strong></p>
+<pre><code class="language-bash">$ git add -p
+diff --git a/src/app.py b/src/app.py
+@@ -10,6 +10,10 @@
+     return data
+
++def login(user, password):       ← Git 展示这个块
++    if auth_service.verify(user, password):
++        return create_session(user)
++    raise AuthError()
++
+ def main():
+     app.run()
+
+(1/1) Stage this hunk [y,n,q,a,d,e,?]? y
+</code></pre>
+<p>这样你可以<strong>精确控制</strong>每次 commit 包含什么 — 即使在一个文件里改了多个无关的事情，也可以分批提交。</p>
+<p><strong><code>--amend</code> 的陷阱：</strong></p>
+<pre><code class="language-bash"># ⚠️ 只在 commit 还没 push 时使用！
+git commit --amend -m &quot;better message&quot;
+
+# 如果已经 push 了，--amend 会重写历史，需要用 --force
+# 这在共享分支上是灾难性的 — 会覆盖别人的工作
+</code></pre>
+<h3 id="33-status-log-diff-状态感知">3.3 status / log / diff — 状态感知</h3>
+<pre><code class="language-bash"># 查看工作区状态
+git status
+git status -s                 # 简短格式
+
+# 查看提交历史
+git log                       # 完整历史
+git log --oneline             # 一行一个 commit
+git log --graph --all --decorate  # 分支图（强烈推荐）
+git log -3                    # 最近 3 条
+git log --author=&quot;Frank&quot;      # 按作者筛选
+git log --since=&quot;2026-06-01&quot;  # 按日期筛选
+git log --grep=&quot;login&quot;        # 搜索 commit message
+git log -S &quot;function_name&quot;    # 搜索代码变更内容（pickaxe）
+git log --stat                # 显示文件变更统计
+
+# 查看差异
+git diff                      # 工作区 vs 暂存区（还没 add 的改动）
+git diff --staged             # 暂存区 vs 最新 commit（已 add 但未 commit 的）
+git diff HEAD                 # 工作区 vs 最新 commit（所有未提交的改动）
+git diff main..feature        # 两个分支的差异
+git diff --word-diff          # 词级别差异（比行级别更细腻）
+</code></pre>
+<p><strong>推荐别名（加入 <code>~/.gitconfig</code>）：</strong></p>
+<pre><code class="language-ini">[alias]
+    lg = log --graph --oneline --all --decorate
+    lga = log --graph --oneline --all --decorate --author-date-order
+    st = status -s
+    df = diff --word-diff
+    co = checkout
+    br = branch
+    ci = commit
+</code></pre>
+<h3 id="34-branch-checkout-switch-分支操作">3.4 branch / checkout / switch — 分支操作</h3>
+<pre><code class="language-bash"># 查看分支
+git branch                    # 本地分支列表
+git branch -a                 # 包括远程分支
+git branch -v                 # 显示每个分支最后一次 commit
+
+# 创建分支
+git branch feature/login      # 创建但不切换
+git checkout -b feature/login # 创建并切换（经典写法）
+git switch -c feature/login   # 创建并切换（Git 2.23+ 推荐）
+
+# 切换分支
+git checkout feature/login    # 经典写法
+git switch feature/login      # 新写法（语义更清晰）
+
+# 删除分支
+git branch -d feature/login   # 安全删除（已 merge 的）
+git branch -D feature/login   # 强制删除（未 merge 的也删）
+
+# 重命名分支
+git branch -m old-name new-name
+</code></pre>
+<blockquote>
+<p><strong>checkout vs switch：</strong> <code>git checkout</code> 承担了太多职责（切换分支 + 恢复文件），Git 2.23 引入了 <code>git switch</code>（只切换分支）和 <code>git restore</code>（只恢复文件），语义更清晰。</p>
+</blockquote>
+<h3 id="35-merge-rebase-合并策略详解">3.5 merge / rebase — 合并策略详解</h3>
+<p>这是 Git 中最需要理解的命令。两种方式实现同一个目标：把一个分支的改动合并到另一个分支。</p>
+<p><strong>Merge（合并）— 保留真实历史：</strong></p>
+<pre><code># 初始状态
+     E ← feature
+    /
+A ← B ← C ← D ← main
+
+# git checkout main &amp;&amp; git merge feature
+     E ← feature
+    / \
+A ← B ← C ← D ← M ← main  ← M 是 merge commit
+</code></pre>
+<pre><code class="language-bash">git checkout main
+git merge feature/login
+
+# 冲突时：
+# &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+# 当前分支的代码
+# =======
+# 要合并进来的代码
+# &gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/login
+</code></pre>
+<p><strong>Rebase（变基）— 重写历史使其线性：</strong></p>
+<pre><code># 初始状态
+     E ← feature
+    /
+A ← B ← C ← D ← main
+
+# git checkout feature &amp;&amp; git rebase main
+A ← B ← C ← D ← E' ← feature  ← 注意 E' 是全新的 commit
+                ↑
+               main
+</code></pre>
+<pre><code class="language-bash">git checkout feature/login
+git rebase main
+
+# 如果冲突，逐个处理：
+# 1. 解决冲突文件
+# 2. git add 冲突文件
+# 3. git rebase --continue  （继续下个 commit）
+# 4. git rebase --abort     （放弃整个 rebase）
+</code></pre>
+<p><strong>如何选择？</strong></p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公共分支（main / develop）</td>
+<td>Merge</td>
+<td>不重写历史，不破坏他人工作</td>
+</tr>
+<tr>
+<td>个人功能分支</td>
+<td>Rebase</td>
+<td>保持历史干净线性</td>
+</tr>
+<tr>
+<td>Pull Request 合并到 main</td>
+<td>Squash Merge</td>
+<td>一个功能一个 commit</td>
+</tr>
+<tr>
+<td>需要保留分支开发过程细节</td>
+<td>Merge（--no-ff）</td>
+<td>保留所有 commit 和分支拓扑</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interactive Rebase — 历史编辑神器：</strong></p>
+<pre><code class="language-bash"># 编辑最近 3 个 commit
+git rebase -i HEAD~3
+
+# 进入编辑器：
+pick abc1234 feat: add login
+pick def5678 fix: typo
+pick ghi9012 wip: debugging
+
+# 修改为：
+pick abc1234 feat: add login
+fixup def5678 fix: typo        ← squash 到上一个，丢弃 message
+reword ghi9012 wip: debugging  ← 保留但修改 message
+</code></pre>
+<p><strong>可用操作：</strong>
+- <code>pick</code> — 保留
+- <code>reword</code> — 保留但修改 message
+- <code>squash</code> — 合并到上一个，合并 message
+- <code>fixup</code> — 合并到上一个，丢弃 message
+- <code>drop</code> — 删除这个 commit
+- <code>edit</code> — 停下来修改这个 commit 的内容</p>
+<blockquote>
+<p><strong>黄金法则：永远不要 rebase 已经 push 到公共仓库的 commit。</strong> 变基会产生新的 commit hash，任何基于旧 hash 的工作都会断裂。</p>
+</blockquote>
+<h3 id="36-reset-revert-restore-撤销的艺术">3.6 reset / revert / restore — 撤销的艺术</h3>
+<p>这三个命令是 Git 中混淆最多的地方。一句话区分：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>做什么</th>
+<th>影响历史？</th>
+<th>安全程度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git revert</code></td>
+<td>创建新 commit 撤销旧 commit</td>
+<td>否（追加）</td>
+<td>🟢 安全</td>
+</tr>
+<tr>
+<td><code>git reset</code></td>
+<td>移动分支指针，丢弃 commit</td>
+<td>是（重写）</td>
+<td>🔴 危险</td>
+</tr>
+<tr>
+<td><code>git restore</code></td>
+<td>恢复文件到某个版本</td>
+<td>否</td>
+<td>🟢 安全</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-bash"># revert — 安全撤销（推荐用于公共分支）
+git revert abc1234                    # 撤销那个 commit，生成新的 revert commit
+git revert abc1234..def5678           # 撤销一个范围
+
+# reset — 重写历史（只用在自己的分支）
+git reset --soft HEAD~1               # 撤销 commit，改动留在暂存区
+git reset --mixed HEAD~1              # 撤销 commit + unstage，改动留在工作区（默认）
+git reset --hard HEAD~1               # 撤销 commit + unstage + 丢弃改动（⚠️ 彻底删除）
+
+# restore — 恢复文件（Git 2.23+）
+git restore file.txt                  # 丢弃工作区的修改（回到暂存区状态）
+git restore --staged file.txt         # 取消暂存（unstage）
+git restore --source=HEAD~2 file.txt  # 恢复到 2 个 commit 之前的版本
+</code></pre>
+<p><strong>reset 三种模式的对比：</strong></p>
+<pre><code>--soft:   只移动 HEAD → commit 的内容回到暂存区
+--mixed:  移动 HEAD + 更新暂存区 → commit 的内容回到工作区
+--hard:   移动 HEAD + 更新暂存区 + 覆盖工作区 → 一切回到指定状态
+</code></pre>
+<p><strong>典型工作流示例：</strong></p>
+<pre><code class="language-bash"># 场景：刚 commit 了，但发现漏了一个文件
+git add forgotten-file.txt
+git commit --amend --no-edit          # 追加到上一个 commit
+
+# 场景：commit message 写错了
+git commit --amend -m &quot;correct message&quot;
+
+# 场景：commit 到错误的分支了
+git log --oneline -1                  # 记下 commit hash
+git checkout correct-branch
+git cherry-pick &lt;commit-hash&gt;         # 把那个 commit 摘过来
+git checkout wrong-branch
+git reset --hard HEAD~1               # 从错误分支删除
+</code></pre>
+<h3 id="37-stash-cherry-pick-灵活工具箱">3.7 stash / cherry-pick — 灵活工具箱</h3>
+<pre><code class="language-bash"># stash — 暂存未完成的工作
+git stash                             # 暂存所有改动
+git stash push -m &quot;WIP: login form&quot;   # 附带描述
+git stash list                        # 查看暂存列表
+git stash pop                         # 恢复最近一次暂存并删除
+git stash apply stash@{1}             # 恢复指定暂存但不删除
+git stash drop stash@{0}              # 删除指定暂存
+git stash show -p stash@{0}           # 查看暂存内容
+
+# cherry-pick — 摘取指定 commit 到当前分支
+git cherry-pick abc1234                # 单个 commit
+git cherry-pick abc1234..def5678       # 范围（不包含 abc1234）
+git cherry-pick abc1234^..def5678      # 范围（包含 abc1234）
+</code></pre>
+<h3 id="38-tag-里程碑标记">3.8 tag — 里程碑标记</h3>
+<pre><code class="language-bash"># 轻量标签（只是一个指向 commit 的指针）
+git tag v1.0.0
+
+# 附注标签（包含作者、日期、message，推荐用于发布）
+git tag -a v1.0.0 -m &quot;Release version 1.0.0&quot;
+
+# 查看标签
+git tag                               # 列出所有标签
+git show v1.0.0                       # 查看标签详情
+
+# 推送标签
+git push origin v1.0.0                # 推送单个标签
+git push origin --tags                # 推送所有标签
+
+# 删除标签
+git tag -d v1.0.0                     # 删除本地标签
+git push origin --delete v1.0.0       # 删除远程标签
+</code></pre>
+<blockquote>
+<p><strong>标签 vs 分支：</strong> 标签是固定的（指向一个永不移动的 commit），分支是移动的（随新 commit 前移）。用标签标记发布版本，用分支进行开发。</p>
+</blockquote>
+<hr />
+<h2 id="四git-远程协作">四、Git 远程协作</h2>
+<h3 id="41-remote-fetch-pull-push-同步机制">4.1 remote / fetch / pull / push — 同步机制</h3>
+<pre><code class="language-bash"># 管理远程仓库
+git remote -v                                    # 查看远程仓库
+git remote add upstream git@github.com:org/repo.git  # 添加远程仓库
+git remote rename origin upstream                # 重命名
+git remote remove upstream                       # 删除
+
+# fetch — 下载远程数据但不合并
+git fetch origin                                 # 下载所有分支
+git fetch origin main                            # 只下载 main 分支
+git fetch --prune                                # 下载并删除本地已不存在的远程分支引用
+
+# pull — fetch + merge（或 rebase）
+git pull origin main                             # 默认是 fetch + merge
+git pull --rebase origin main                    # fetch + rebase（推荐）
+
+# push — 上传本地数据
+git push origin main                             # 推送 main 分支
+git push origin feature/login                    # 推送特定分支
+git push -u origin feature/login                 # 推送并设置上游（下次直接 git push）
+git push --force-with-lease                      # 安全强制推送（推荐替代 --force）
+git push origin --delete feature/login           # 删除远程分支
+</code></pre>
+<p><strong>fetch vs pull 的区别：</strong></p>
+<pre><code class="language-bash"># fetch = 下载但不合并（安全，推荐）
+git fetch origin
+git log origin/main     # 查看远程有什么新东西
+git diff main origin/main   # 看看差异
+git merge origin/main   # 手动合并
+
+# pull = 下载 + 自动合并（一步到位，但可能产生意外合并）
+git pull origin main
+
+# 推荐配置：让 pull 默认使用 rebase
+git config --global pull.rebase true
+</code></pre>
+<p><strong><code>--force-with-lease</code> 为什么更安全：</strong></p>
+<pre><code class="language-bash"># --force：无条件覆盖远程（如果有人在你之后 push 了，会被覆盖掉）
+git push --force
+
+# --force-with-lease：只在远程和你的本地记录一致时才推送
+# 如果远程有别人推送的新内容，推送会失败，保护协作安全
+git push --force-with-lease
+</code></pre>
+<h3 id="42-fork-vs-clone-vs-branch-协作模式">4.2 fork vs clone vs branch — 协作模式</h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>适用场景</th>
+<th>权限要求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Branch</strong></td>
+<td>同一团队，同仓库</td>
+<td>Write 权限</td>
+</tr>
+<tr>
+<td><strong>Fork</strong></td>
+<td>开源贡献，跨组织协作</td>
+<td>无需原仓库权限</td>
+</tr>
+<tr>
+<td><strong>Clone</strong></td>
+<td>获取代码到本地</td>
+<td>公开仓库无需权限</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fork 工作流：</strong></p>
+<pre><code class="language-bash"># 1. 在 GitHub 上点击 Fork 按钮，fork 到自己的账号
+# 2. Clone 自己的 fork
+git clone git@github.com:my-account/repo.git
+cd repo
+
+# 3. 添加原始仓库为 upstream
+git remote add upstream git@github.com:original-owner/repo.git
+
+# 4. 保持同步
+git fetch upstream
+git checkout main
+git merge upstream/main
+git push origin main
+
+# 5. 创建功能分支、开发、推送
+git checkout -b feature/my-feature
+# ... 开发 ...
+git push -u origin feature/my-feature
+
+# 6. 在 GitHub 上从自己的 fork 创建 Pull Request 到原始仓库
+</code></pre>
+<h3 id="43-冲突解决实战">4.3 冲突解决实战</h3>
+<pre><code class="language-bash"># 冲突发生时：
+git merge feature/login
+# Auto-merging src/app.py
+# CONFLICT (content): Merge conflict in src/app.py
+# Automatic merge failed; fix conflicts and then commit the result.
+
+# 文件内容：
+# &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+# def login():
+#     return auth_email(email, password)
+# =======
+# def login():
+#     return auth_oauth(provider, token)
+# &gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/login
+
+# 解决步骤：
+# 1. 手动编辑文件，删除标记，保留正确代码
+# 2. git add src/app.py
+# 3. git commit（不需要 -m，Git 会生成 merge message）
+
+# 方便的工具：
+git diff --name-only --diff-filter=U    # 只列出冲突文件
+git checkout --ours src/app.py           # 全选当前分支版本
+git checkout --theirs src/app.py         # 全选要合并的版本
+git mergetool                            # 打开可视化合并工具
+</code></pre>
+<hr />
+<h2 id="五github-平台深度使用">五、GitHub 平台深度使用</h2>
+<h3 id="51-issues-任务追踪">5.1 Issues — 任务追踪</h3>
+<p>Issue 不仅是 Bug 报告，也是功能讨论、任务管理和知识库。</p>
+<p><strong>Issue 模板（<code>.github/ISSUE_TEMPLATE/bug_report.md</code>）：</strong></p>
+<pre><code class="language-markdown">---
+name: Bug Report
+about: 报告一个 Bug
+title: &quot;[Bug] &quot;
+labels: bug
+---
+
+## 描述 (Description)
+
+清晰描述 Bug 的表现。
+
+## 复现步骤 (Steps to Reproduce)
+
+1. 执行 '...'
+2. 点击 '...'
+3. 看到错误 '...'
+
+## 期望行为 (Expected Behavior)
+
+应该发生什么。
+
+## 环境 (Environment)
+
+- OS: macOS 14.0
+- Browser: Chrome 120
+- Version: v2.1.0
+</code></pre>
+<p><strong>Issue 高级用法：</strong></p>
+<pre><code class="language-markdown"># 引用 PR / commit
+Closes #123          # PR 合并时自动关闭 Issue
+Fixes #456           # 同上
+Related to #789      # 不会自动关闭
+
+# 任务列表
+- [x] 添加登录接口
+- [ ] 编写单元测试
+- [ ] 更新 API 文档
+
+# @ 提及分配
+@sunailian 请 review 这个设计
+</code></pre>
+<h3 id="52-pull-requests-代码审查流">5.2 Pull Requests — 代码审查流</h3>
+<p><strong>PR 的最佳实践：</strong></p>
+<pre><code class="language-markdown">## 概述 (Summary)
+
+实现用户 OAuth 登录功能，支持 Google 和 GitHub 两种方式。
+
+## 改动内容 (Changes)
+
+- 新增 `OAuthService` 处理 OAuth 2.0 流程
+- 新增 `config/oauth.yaml` 配置文件
+- 更新 `User` 模型支持 OAuth provider 字段
+
+## 测试 (Testing)
+
+- [x] 单元测试：OAuthService 核心逻辑
+- [x] 集成测试：Google / GitHub 登录全流程
+- [x] 手动测试：开发环境完整验证
+
+## 截图 (Screenshots)
+
+![Login Page](https://user-images.githubusercontent.com/...)
+
+## 关联 Issue (Related Issues)
+
+Closes #42
+</code></pre>
+<p><strong>Code Review 命令（评论中可用）：</strong></p>
+<pre><code class="language-markdown">/suggest    # 提出改进建议（GitHub 会生成一个 suggestion block）
+/lgtm       # Looks Good To Me
+/approve    # 批准
+</code></pre>
+<h3 id="53-actions-ci-自动化流水线">5.3 Actions / CI — 自动化流水线</h3>
+<p><strong>基础工作流（<code>.github/workflows/ci.yml</code>）：</strong></p>
+<pre><code class="language-yaml">name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test -- --coverage
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+</code></pre>
+<p><strong>常用的 Actions 操作：</strong></p>
+<pre><code class="language-yaml"># 缓存依赖
+- uses: actions/cache@v4
+  with:
+    path: ~/.npm
+    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+# 发布到 GitHub Pages
+- uses: peaceiris/actions-gh-pages@v3
+  with:
+    github_token: ${{ secrets.GITHUB_TOKEN }}
+    publish_dir: ./dist
+
+# Docker 构建并推送
+- uses: docker/build-push-action@v5
+  with:
+    push: true
+    tags: ghcr.io/${{ github.repository }}:latest
+</code></pre>
+<p><strong>Secrets 管理：</strong></p>
+<pre><code class="language-bash"># 在 GitHub 仓库 Settings → Secrets and variables → Actions 中设置
+# 然后在工作流中引用：
+${{ secrets.DEPLOY_KEY }}
+${{ secrets.NPM_TOKEN }}
+</code></pre>
+<h3 id="54-projects-项目管理">5.4 Projects — 项目管理</h3>
+<p>GitHub Projects 是一个看板式的项目管理工具，可以跨仓库管理 Issue 和 PR。</p>
+<p><strong>关键概念：</strong>
+- <strong>视图（View）：</strong> Table / Board / Roadmap 三种展示方式
+- <strong>字段（Field）：</strong> 自定义状态、优先级、估算等
+- <strong>自动化：</strong> Issue 关闭时自动移动卡片</p>
+<p><strong>推荐配置：</strong></p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>📋 Backlog</td>
+<td>待办，未排期</td>
+</tr>
+<tr>
+<td>🏗 In Progress</td>
+<td>开发中</td>
+</tr>
+<tr>
+<td>👀 In Review</td>
+<td>代码审查中</td>
+</tr>
+<tr>
+<td>✅ Done</td>
+<td>已完成</td>
+</tr>
+</tbody>
+</table>
+<h3 id="55-releases-版本发布">5.5 Releases — 版本发布</h3>
+<pre><code class="language-bash"># 通过 gh CLI 创建 Release
+gh release create v1.0.0 --title &quot;v1.0.0&quot; --generate-notes
+
+# 带附件
+gh release create v1.0.0 ./dist/binary --title &quot;v1.0.0&quot; --notes &quot;Release notes&quot;
+
+# 草稿（先保存不发布）
+gh release create v2.0.0-rc1 --draft --prerelease --generate-notes
+</code></pre>
+<p><strong>语义化版本（SemVer）：</strong></p>
+<pre><code>v2.1.3
+│ │ │
+│ │ └── PATCH：Bug 修复（向下兼容）
+│ └──── MINOR：新功能（向下兼容）
+└────── MAJOR：破坏性变更（不兼容）
+</code></pre>
+<h3 id="56-安全分支保护">5.6 安全：分支保护</h3>
+<p>在仓库 Settings → Branches → Add branch protection rule：</p>
+<pre><code class="language-json">{
+  &quot;branch&quot;: &quot;main&quot;,
+  &quot;required_approving_review_count&quot;: 1,
+  &quot;dismiss_stale_reviews&quot;: true,
+  &quot;require_code_owner_reviews&quot;: true,
+  &quot;required_status_checks&quot;: [&quot;ci/test&quot;, &quot;ci/lint&quot;],
+  &quot;require_conversation_resolution&quot;: true,
+  &quot;allow_force_pushes&quot;: false,
+  &quot;allow_deletions&quot;: false
+}
+</code></pre>
+<hr />
+<h2 id="六github-cligh实战">六、GitHub CLI（gh）实战</h2>
+<h3 id="61-安装与登录">6.1 安装与登录</h3>
+<pre><code class="language-bash"># macOS
+brew install gh
+
+# 登录（支持浏览器和 token 两种方式）
+gh auth login
+
+# 验证
+gh auth status
+</code></pre>
+<h3 id="62-常用命令速查">6.2 常用命令速查</h3>
+<pre><code class="language-bash"># ==== Issues ====
+gh issue list                              # 查看 Issue 列表
+gh issue view 42                           # 查看详情
+gh issue create --title &quot;Bug: login fail&quot; --body &quot;Description&quot;  # 创建
+gh issue close 42                          # 关闭
+gh issue reopen 42                         # 重新打开
+
+# ==== PR ====
+gh pr list                                 # 查看 PR 列表
+gh pr view 123                             # 查看详情
+gh pr create --title &quot;feat: OAuth login&quot; --body &quot;...&quot;  # 创建 PR
+gh pr checkout 123                         # 检出 PR 到本地
+gh pr review 123 --approve                 # 批准
+gh pr review 123 --comment -b &quot;LGTM!&quot;     # 评论
+gh pr merge 123 --squash                   # Squash 合并
+gh pr merge 123 --rebase                   # Rebase 合并
+gh pr merge 123 --merge                    # 普通 Merge
+
+# ==== Repo ====
+gh repo clone owner/repo                   # 克隆
+gh repo create my-project --public --clone # 创建并克隆
+gh repo fork owner/repo --clone            # Fork 并克隆
+gh repo view                               # 查看仓库信息
+
+# ==== Actions ====
+gh run list                                # 查看运行记录
+gh run watch                               # 实时查看运行日志
+gh workflow run ci.yml                     # 触发工作流
+
+# ==== Gist ====
+gh gist create script.py --public          # 创建 Gist
+gh gist list                               # 查看 Gist 列表
+</code></pre>
+<hr />
+<h2 id="七工作流实战">七、工作流实战</h2>
+<h3 id="71-git-flow">7.1 Git Flow</h3>
+<p>适合有固定发布周期的项目。</p>
+<pre><code>main     ──●────────────●────────────●──
+            \          / \          /
+develop  ●──●──●──●──●───●──●──●──●──
+              \    /
+feature   ●──●──●──●
+                   \
+release           ●──●──●
+                         \
+hotfix                    ●──●
+</code></pre>
+<p><strong>分支类型：</strong>
+- <code>main</code> — 生产代码
+- <code>develop</code> — 开发主线
+- <code>feature/*</code> — 新功能
+- <code>release/*</code> — 发布准备
+- <code>hotfix/*</code> — 紧急修复</p>
+<h3 id="72-github-flow">7.2 GitHub Flow</h3>
+<p>GitHub 官方推荐，简单灵活。</p>
+<pre><code>main ──●────●────●────●────
+        \   /    /    /
+         ●─●    /    /
+          feature1  /
+               ●───●
+                feature2
+</code></pre>
+<p><strong>规则：</strong>
+1. <code>main</code> 分支始终可部署
+2. 从 <code>main</code> 创建描述性分支
+3. 持续 push 到远程
+4. 开 Pull Request 讨论
+5. 合并后立即部署</p>
+<h3 id="73-trunk-based-development">7.3 Trunk-Based Development</h3>
+<p>适合持续交付和高频部署的团队。</p>
+<pre><code>main ──●─●─●─●─●─●─●──  ← 每天多次合并
+        \/ / / / / /
+         ● ● ● ● ●       ← 短生命周期分支（&lt;1天）
+</code></pre>
+<p><strong>核心实践：</strong>
+- 直接在 <code>main</code> 上开发，或使用极短分支（&lt;24 小时）
+- 通过 feature flag 控制未完成功能的可见性
+- 频繁集成，小步提交
+- 需要高度成熟的 CI/CD 和测试</p>
+<h3 id="74-如何选型">7.4 如何选型</h3>
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>推荐工作流</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有固定发布周期（如每两周）</td>
+<td>Git Flow</td>
+</tr>
+<tr>
+<td>小型团队，持续部署</td>
+<td>GitHub Flow</td>
+</tr>
+<tr>
+<td>成熟 CI/CD，高频部署</td>
+<td>Trunk-Based</td>
+</tr>
+<tr>
+<td>开源项目，外部贡献者</td>
+<td>GitHub Flow + Fork</td>
+</tr>
+<tr>
+<td>企业内部项目</td>
+<td>Git Flow 或 GitHub Flow</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="八高级话题">八、高级话题</h2>
+<h3 id="81-gitignore-与-gitattributes">8.1 <code>.gitignore</code> 与 <code>.gitattributes</code></h3>
+<pre><code class="language-gitignore"># .gitignore — 告诉 Git 哪些文件不追踪
+node_modules/
+*.log
+.env
+dist/
+.DS_Store
+*.pyc
+__pycache__/
+.vscode/
+
+# 例外：! 开头的规则会重新包含
+!important.log          # 追踪这个特定的 log 文件
+
+# 全局 gitignore
+git config --global core.excludesfile ~/.gitignore_global
+</code></pre>
+<pre><code class="language-gitattributes"># .gitattributes — 控制 Git 如何处理文件
+# 统一换行符
+* text=auto
+
+# 二进制文件不尝试 diff
+*.png binary
+*.jpg binary
+
+# 大文件用 LFS 管理
+*.psd filter=lfs diff=lfs merge=lfs -text
+</code></pre>
+<h3 id="82-submodule-subtree">8.2 submodule / subtree</h3>
+<pre><code class="language-bash"># submodule — 引用外部仓库的一个特定 commit
+git submodule add git@github.com:user/lib.git libs/mylib
+git submodule update --init --recursive   # 克隆后初始化子模块
+
+# 子模块更新
+cd libs/mylib
+git pull origin main
+cd ../..
+git add libs/mylib
+git commit -m &quot;Update submodule&quot;
+
+# ⚠️ submodule 的痛点：需要额外命令、容易忘记更新、CI 配置复杂
+# 替代方案：用 subtree 将外部代码直接纳入仓库
+git subtree add --prefix=libs/mylib git@github.com:user/lib.git main --squash
+</code></pre>
+<h3 id="83-reflog-后悔药">8.3 reflog — 后悔药</h3>
+<pre><code class="language-bash"># reflog 记录了 HEAD 的所有移动
+git reflog
+
+# 输出示例：
+# abc1234 HEAD@{0}: commit: feat: add login
+# def5678 HEAD@{1}: commit: fix: typo
+# ghi9012 HEAD@{2}: reset: moving to HEAD~1
+
+# 恢复到&quot;刚才&quot;的状态（即使做了 hard reset）
+git reset --hard HEAD@{1}
+
+# 恢复&quot;丢失&quot;的 commit
+git checkout -b recovered-branch abc1234
+
+# reflog 默认保留 90 天（可达对象）或 30 天（不可达对象）
+</code></pre>
+<h3 id="84-bisect-二分排错">8.4 bisect — 二分排错</h3>
+<pre><code class="language-bash"># 已知：v1.0 工作正常，当前版本有 Bug
+# 但不知道是哪个 commit 引入的
+
+git bisect start
+git bisect bad HEAD              # 标记当前版本有问题
+git bisect good v1.0.0           # 标记 v1.0.0 是好的
+
+# Git 自动 checkout 到中间某个 commit
+# 测试 → 告诉 Git 结果
+git bisect good                  # 或 git bisect bad
+
+# 重复直到找到元凶
+# abc1234 is the first bad commit
+
+# 完成后退出 bisect 模式
+git bisect reset
+</code></pre>
+<p><strong>原理：</strong> 假设有 100 个可疑 commit，二分查找最多需要 7 次测试（log₂(100) ≈ 7），而不是线性遍历 100 次。</p>
+<h3 id="85-hooks-自动化钩子">8.5 hooks — 自动化钩子</h3>
+<p>Git hooks 是存放在 <code>.git/hooks/</code> 下的脚本，在特定事件触发时自动执行。</p>
+<pre><code class="language-bash"># 常用 hooks：
+# pre-commit  — commit 前运行（检查代码风格、运行 linter）
+# commit-msg  — 验证 commit message 格式
+# pre-push    — push 前运行（运行测试）
+# post-merge  — merge 后运行（更新依赖）
+
+# pre-commit 示例（检查 Python 代码风格）
+#!/bin/bash
+# .git/hooks/pre-commit
+python3 -m ruff check .
+if [ $? -ne 0 ]; then
+    echo &quot;代码风格检查失败，请修复后再 commit&quot;
+    exit 1
+fi
+</code></pre>
+<p><strong>推荐使用 pre-commit 框架：</strong></p>
+<pre><code class="language-yaml"># .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.1.0
+    hooks:
+      - id: black
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.0
+    hooks:
+      - id: ruff
+</code></pre>
+<h3 id="86-大文件处理git-lfs">8.6 大文件处理（Git LFS）</h3>
+<pre><code class="language-bash"># 安装 Git LFS
+brew install git-lfs
+git lfs install
+
+# 追踪大文件类型
+git lfs track &quot;*.psd&quot;
+git lfs track &quot;*.zip&quot;
+git lfs track &quot;*.mp4&quot;
+
+# 正常使用
+git add file.psd
+git commit -m &quot;Add design file&quot;
+git push
+
+# Git LFS 的原理：
+# 1. 仓库中只存一个指针文件（几百字节）
+# 2. 实际大文件存在 LFS 服务器上
+# 3. git clone 时下载指针，git checkout 时按需下载大文件
+</code></pre>
+<hr />
+<h2 id="九踩坑集锦与最佳实践">九、踩坑集锦与最佳实践</h2>
+<h3 id="91-常见错误与修复">9.1 常见错误与修复</h3>
+<p><strong>1. <code>detached HEAD</code> 状态</strong></p>
+<pre><code class="language-bash"># 症状：checkout 到某个 commit 而不是分支
+# 原因：直接 checkout 了一个 commit hash 或 tag
+git checkout abc1234
+
+# 修复：创建新分支
+git checkout -b temp-branch
+</code></pre>
+<p><strong>2. 不小心 <code>add</code> 了不该 <code>add</code> 的文件</strong></p>
+<pre><code class="language-bash"># 取消暂存
+git restore --staged wrong-file.txt
+# 或者
+git reset HEAD wrong-file.txt
+</code></pre>
+<p><strong>3. <code>commit</code> 错了分支</strong></p>
+<pre><code class="language-bash">git log --oneline -1           # 记下 hash
+git checkout correct-branch
+git cherry-pick &lt;hash&gt;         # 摘过去
+git checkout wrong-branch
+git reset --hard HEAD~1         # 删掉错的
+</code></pre>
+<p><strong>4. <code>push</code> 被拒绝（non-fast-forward）</strong></p>
+<pre><code class="language-bash"># 原因：远程有你的本地没有的 commit
+# 不要直接 force push！
+git fetch origin
+git rebase origin/main          # 或者 merge
+git push origin main
+</code></pre>
+<p><strong>5. 大文件已 <code>commit</code>，即使之后删除，仓库仍然很大</strong></p>
+<pre><code class="language-bash"># 从历史中彻底删除大文件
+git filter-branch --force --index-filter \
+  &quot;git rm --cached --ignore-unmatch path/to/huge-file.zip&quot; \
+  --prune-empty --tag-name-filter cat -- --all
+
+# 或者使用 BFG Repo-Cleaner（更快）
+# brew install bfg
+# bfg --delete-files huge-file.zip
+</code></pre>
+<h3 id="92-commit-message-规范">9.2 Commit Message 规范</h3>
+<p><strong>Conventional Commits（推荐）：</strong></p>
+<pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+
+&lt;body&gt;
+
+&lt;footer&gt;
+</code></pre>
+<p><strong>类型（type）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat</code></td>
+<td>新功能</td>
+</tr>
+<tr>
+<td><code>fix</code></td>
+<td>Bug 修复</td>
+</tr>
+<tr>
+<td><code>docs</code></td>
+<td>文档更新</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>代码格式（不影响逻辑）</td>
+</tr>
+<tr>
+<td><code>refactor</code></td>
+<td>重构（既非新功能也非修复）</td>
+</tr>
+<tr>
+<td><code>perf</code></td>
+<td>性能优化</td>
+</tr>
+<tr>
+<td><code>test</code></td>
+<td>测试相关</td>
+</tr>
+<tr>
+<td><code>chore</code></td>
+<td>构建/工具/依赖更新</td>
+</tr>
+<tr>
+<td><code>ci</code></td>
+<td>CI 配置变更</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例：</strong></p>
+<pre><code>feat(login): add OAuth 2.0 support for Google
+
+Implemented Google OAuth 2.0 flow with PKCE extension.
+Configuration via GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET env vars.
+
+Closes #42
+BREAKING CHANGE: Removed deprecated password auth endpoint
+</code></pre>
+<h3 id="93-团队协作建议">9.3 团队协作建议</h3>
+<p><strong>1. 保持 PR 小而专注</strong></p>
+<pre><code>好：一个 PR = 一个功能 / 一个修复
+坏：一个 PR = 登录功能 + 首页改版 + 数据库迁移
+</code></pre>
+<p>小 PR 审查快、冲突少、回滚容易。</p>
+<p><strong>2. 每次 commit 应该是可工作的单元</strong></p>
+<pre><code>好：
+abc1234 feat: add login form component
+def5678 feat: add login API endpoint
+ghi9012 feat: wire up login form to API
+jkl0123 test: add login integration tests
+
+坏：
+abc1234 wip
+def5678 fix stuff
+ghi9012 more fixes
+</code></pre>
+<p><strong>3. 保护 main 分支</strong></p>
+<pre><code class="language-bash"># 禁止直接 push
+# 要求 PR + Review
+# 要求 CI 通过
+# 要求线性历史（禁止 merge commit）
+</code></pre>
+<p><strong>4. 分支命名规范</strong></p>
+<pre><code>feature/login-oauth      # 新功能
+bugfix/login-timeout     # Bug 修复
+hotfix/critical-auth     # 紧急修复
+release/v2.0.0           # 发布准备
+chore/update-deps        # 杂务
+</code></pre>
+<h3 id="94-gitconfig-推荐配置">9.4 <code>.gitconfig</code> 推荐配置</h3>
+<pre><code class="language-ini">[user]
+    name = Frank
+    email = sunangie@126.com
+
+[core]
+    editor = vim
+    autocrlf = input          # macOS/Linux 使用 LF 换行
+    excludesfile = ~/.gitignore_global
+
+[alias]
+    lg = log --graph --oneline --all --decorate
+    lga = log --graph --oneline --all --decorate --author-date-order
+    st = status -s
+    df = diff --word-diff
+    br = branch
+    co = checkout
+    ci = commit
+
+[pull]
+    rebase = true             # pull 默认使用 rebase 而非 merge
+
+[merge]
+    conflictstyle = diff3     # 冲突时显示三方对比（更好定位）
+
+[diff]
+    colorMoved = zebra        # 高亮移动的代码块
+
+[push]
+    default = current         # 默认推送当前分支
+</code></pre>
+<hr />
+<h2 id="附录速查表">附录：速查表</h2>
+<h3 id="撤销操作">撤销操作</h3>
+<table>
+<thead>
+<tr>
+<th>想做什么</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>丢弃工作区修改</td>
+<td><code>git restore file.txt</code></td>
+</tr>
+<tr>
+<td>取消暂存</td>
+<td><code>git restore --staged file.txt</code></td>
+</tr>
+<tr>
+<td>修改最后一次 commit</td>
+<td><code>git commit --amend</code></td>
+</tr>
+<tr>
+<td>撤销 commit（保留改动）</td>
+<td><code>git reset --soft HEAD~1</code></td>
+</tr>
+<tr>
+<td>撤销 commit（丢弃改动）</td>
+<td><code>git reset --hard HEAD~1</code></td>
+</tr>
+<tr>
+<td>安全撤销已 push 的 commit</td>
+<td><code>git revert abc1234</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="分支操作">分支操作</h3>
+<table>
+<thead>
+<tr>
+<th>想做什么</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>创建并切换分支</td>
+<td><code>git switch -c feature/x</code></td>
+</tr>
+<tr>
+<td>删除本地分支</td>
+<td><code>git branch -d feature/x</code></td>
+</tr>
+<tr>
+<td>删除远程分支</td>
+<td><code>git push origin --delete feature/x</code></td>
+</tr>
+<tr>
+<td>重命名分支</td>
+<td><code>git branch -m old new</code></td>
+</tr>
+<tr>
+<td>查看所有分支</td>
+<td><code>git branch -a</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="远程操作">远程操作</h3>
+<table>
+<thead>
+<tr>
+<th>想做什么</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>下载但不合并</td>
+<td><code>git fetch origin</code></td>
+</tr>
+<tr>
+<td>下载并合并</td>
+<td><code>git pull origin main</code></td>
+</tr>
+<tr>
+<td>下载并变基</td>
+<td><code>git pull --rebase origin main</code></td>
+</tr>
+<tr>
+<td>首次推送</td>
+<td><code>git push -u origin main</code></td>
+</tr>
+<tr>
+<td>安全强制推送</td>
+<td><code>git push --force-with-lease</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<blockquote>
+<p><strong>「对抗焦虑的最好办法，是亲手构建确定性。」</strong> — 掌握 Git，就是掌握了代码世界的确定性。</p>
+</blockquote>
+<hr />
+<h2 id="许可">许可</h2>
+<p>MIT License</p>
+  </main>
+</div>
+
+<button class="toc-float" id="tocFloat" aria-label="目录" title="目录">☰</button>
+<div class="toc-overlay" id="tocOverlay">
+  <div class="toc-drawer" id="tocDrawer">
+    <button class="toc-close" id="tocClose" aria-label="关闭">✕</button>
+  </div>
 </div>
 
 <script>
-(async () => {
-  // Markdown content embedded at build time — zero network dependency
-  const md = "# \ud83d\udcd8 GitHub \u5b8c\u5168\u6307\u5357\n\n> \u4ece\u539f\u7406\u5230\u5b9e\u6218\u7684 Git & GitHub \u5b8c\u6574\u6559\u7a0b \u2014 \u4e0d\u53ea\u662f\u547d\u4ee4\uff0c\u66f4\u662f\u7406\u89e3\u3002\n\n---\n\n## \u76ee\u5f55\n\n- [\u4e00\u3001\u7248\u672c\u63a7\u5236\u7684\u672c\u8d28](#\u4e00\u7248\u672c\u63a7\u5236\u7684\u672c\u8d28)\n- [\u4e8c\u3001Git \u6838\u5fc3\u539f\u7406](#\u4e8cgit-\u6838\u5fc3\u539f\u7406)\n- [\u4e09\u3001Git \u57fa\u7840\u547d\u4ee4](#\u4e09git-\u57fa\u7840\u547d\u4ee4)\n- [\u56db\u3001Git \u8fdc\u7a0b\u534f\u4f5c](#\u56dbgit-\u8fdc\u7a0b\u534f\u4f5c)\n- [\u4e94\u3001GitHub \u5e73\u53f0\u6df1\u5ea6\u4f7f\u7528](#\u4e94github-\u5e73\u53f0\u6df1\u5ea6\u4f7f\u7528)\n- [\u516d\u3001GitHub CLI\uff08gh\uff09\u5b9e\u6218](#\u516dgithub-cligh-\u5b9e\u6218)\n- [\u4e03\u3001\u5de5\u4f5c\u6d41\u5b9e\u6218](#\u4e03\u5de5\u4f5c\u6d41\u5b9e\u6218)\n- [\u516b\u3001\u9ad8\u7ea7\u8bdd\u9898](#\u516b\u9ad8\u7ea7\u8bdd\u9898)\n- [\u4e5d\u3001\u8e29\u5751\u96c6\u9526\u4e0e\u6700\u4f73\u5b9e\u8df5](#\u4e5d\u8e29\u5751\u96c6\u9526\u4e0e\u6700\u4f73\u5b9e\u8df5)\n\n---\n\n## \u4e00\u3001\u7248\u672c\u63a7\u5236\u7684\u672c\u8d28\n\n### 1.1 \u4e3a\u4ec0\u4e48\u9700\u8981\u7248\u672c\u63a7\u5236\n\n\u60f3\u8c61\u4f60\u6b63\u5728\u5199\u4e00\u7bc7\u8bba\u6587\uff1a\n\n```\n\u8bba\u6587_v1.docx\n\u8bba\u6587_v2_\u5bfc\u5e08\u4fee\u6539.docx\n\u8bba\u6587_v3_\u6700\u7ec8\u7248.docx\n\u8bba\u6587_v3_\u6700\u7ec8\u7248_\u771f\u7684\u6700\u7ec8.docx\n\u8bba\u6587_v3_\u6700\u7ec8\u7248_\u518d\u4e5f\u4e0d\u6539\u4e86.docx\n```\n\n\u8fd9\u5c31\u662f\u6ca1\u6709\u7248\u672c\u63a7\u5236\u7684\u5669\u68a6\u3002\u7248\u672c\u63a7\u5236\u7cfb\u7edf\uff08VCS\uff0cVersion Control System\uff09\u89e3\u51b3\u4e86\u4e09\u4e2a\u6838\u5fc3\u95ee\u9898\uff1a\n\n| \u95ee\u9898 | \u89e3\u51b3\u65b9\u6848 |\n|------|----------|\n| **\u56de\u6eaf** \u2014 \u6539\u4e86\u54ea\u4e9b\u3001\u8c01\u6539\u7684\u3001\u4e3a\u4ec0\u4e48\u6539 | \u6bcf\u6b21\u4fdd\u5b58\u751f\u6210\u4e00\u4e2a\u5feb\u7167\uff0c\u9644\u5e26\u5143\u4fe1\u606f |\n| **\u534f\u4f5c** \u2014 \u591a\u4eba\u540c\u65f6\u6539\u540c\u4e00\u4e2a\u6587\u4ef6 | \u5206\u652f + \u5408\u5e76\u673a\u5236\uff0c\u72ec\u7acb\u5de5\u4f5c\u540e\u96c6\u6210 |\n| **\u5907\u4efd** \u2014 \u7535\u8111\u574f\u4e86\u3001\u6587\u4ef6\u4e22\u4e86 | \u5206\u5e03\u5f0f\u67b6\u6784\uff0c\u6bcf\u4e2a\u514b\u9686\u90fd\u662f\u5b8c\u6574\u5907\u4efd |\n\n### 1.2 Git \u7684\u8bbe\u8ba1\u54f2\u5b66\uff1a\u5feb\u7167 vs \u5dee\u5f02\n\n\u5927\u591a\u6570 VCS\uff08\u5982 SVN\uff09\u4ee5**\u6587\u4ef6\u5dee\u5f02**\uff08delta\uff09\u65b9\u5f0f\u5b58\u50a8\u5386\u53f2\uff1a\n\n```\n\u6587\u4ef6 v1 \u2192 [\u5dee\u5f02] \u2192 \u6587\u4ef6 v2 \u2192 [\u5dee\u5f02] \u2192 \u6587\u4ef6 v3\n```\n\nGit \u5219\u5b8c\u5168\u4e0d\u540c \u2014 **\u6bcf\u6b21 commit \u662f\u6574\u4e2a\u9879\u76ee\u7684\u5b8c\u6574\u5feb\u7167**\uff1a\n\n```\ncommit1: \u6587\u4ef6A(v1) \u6587\u4ef6B(v1) \u6587\u4ef6C(v1)\ncommit2: \u6587\u4ef6A(v2) \u6587\u4ef6B(v1) \u6587\u4ef6C(v1)  \u2190 \u53ea\u53d8\u4e86\u4e00\u4e2a\u6587\u4ef6\uff0c\u4f46\u5b58\u4e86\u6574\u4e2a\u72b6\u6001\n```\n\n> **\u4e3a\u4ec0\u4e48\u8981\u8fd9\u4e48\u201c\u6d6a\u8d39\u201d\uff1f** \u56e0\u4e3a\u8bfb\u53d6\u5386\u53f2\u65f6\u4e0d\u9700\u8981\u53cd\u5411\u8ba1\u7b97\u5dee\u5f02\u94fe\uff0c\u5207\u6362\u7248\u672c\u662f O(1) \u64cd\u4f5c\u3002\u800c\u4e14 Git \u4f1a\u5bf9\u672a\u53d8\u5316\u7684\u6587\u4ef6\u4f7f\u7528\u7b26\u53f7\u94fe\u63a5\uff08\u901a\u8fc7 `.git/objects` \u7684 hash \u53bb\u91cd\uff09\uff0c\u5b9e\u9645\u78c1\u76d8\u5360\u7528\u5e76\u4e0d\u5927\u3002\n\n### 1.3 \u5206\u5e03\u5f0f vs \u96c6\u4e2d\u5f0f\n\n```\n\u96c6\u4e2d\u5f0f\uff08SVN\uff09\uff1a               \u5206\u5e03\u5f0f\uff08Git\uff09\uff1a\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510                \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 \u4e2d\u592e\u4ed3\u5e93  \u2502 \u2190 \u552f\u4e00\u771f\u7406\u6765\u6e90    \u2502 \u8fdc\u7a0b\u4ed3\u5e93  \u2502\n\u2514\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2518                \u2514\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2518\n     \u2502                          \u2502\n\u250c\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2510              \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502 \u5de5\u4f5c\u526f\u672c  \u2502             \u2502 \u672c\u5730\u4ed3\u5e93  \u2502 \u672c\u5730\u4ed3\u5e93  \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518              \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n**\u5206\u5e03\u5f0f\u610f\u5473\u7740\uff1a**\n- \u6bcf\u4e2a\u5f00\u53d1\u8005\u62e5\u6709**\u5b8c\u6574\u7684\u5386\u53f2\u526f\u672c**\uff0c\u4e0d\u53ea\u662f\u6700\u65b0\u7248\u672c\n- \u79bb\u7ebf\u53ef commit\u3001branch\u3001merge\u3001view log\n- \u6ca1\u6709\u5355\u70b9\u6545\u969c \u2014 \u4efb\u4f55\u514b\u9686\u90fd\u53ef\u4ee5\u6062\u590d\u6574\u4e2a\u9879\u76ee\n- \u5de5\u4f5c\u6d41\u7075\u6d3b \u2014 \u4e0d\u9700\u8981\u4e2d\u592e\u670d\u52a1\u5668\u4e5f\u80fd\u534f\u4f5c\uff08Linux \u5185\u6838\u5c31\u662f\u8fd9\u6837\u5f00\u53d1\u7684\uff09\n\n---\n\n## \u4e8c\u3001Git \u6838\u5fc3\u539f\u7406\n\n### 2.1 `.git` \u76ee\u5f55\u89e3\u5256\n\n\u5f53\u4f60\u6267\u884c `git init` \u65f6\uff0cGit \u5728\u5f53\u524d\u76ee\u5f55\u521b\u5efa\u4e00\u4e2a `.git` \u6587\u4ef6\u5939\u3002**\u8fd9\u662f Git \u7684\u5168\u90e8** \u2014 \u5220\u9664\u5b83\u5c31\u7b49\u4e8e\u5220\u9664\u6240\u6709\u7248\u672c\u5386\u53f2\u3002\n\n```\n.git/\n\u251c\u2500\u2500 HEAD              # \u6307\u5411\u5f53\u524d\u5206\u652f\u7684\u5f15\u7528\uff08\u5982 ref: refs/heads/main\uff09\n\u251c\u2500\u2500 config            # \u4ed3\u5e93\u7ea7\u522b\u7684\u914d\u7f6e\n\u251c\u2500\u2500 objects/          # \u5bf9\u8c61\u6570\u636e\u5e93\uff08\u6838\u5fc3\uff01\u6240\u6709\u5185\u5bb9\u5b58\u5728\u8fd9\u91cc\uff09\n\u2502   \u251c\u2500\u2500 xx/           # \u4ee5 hash \u524d\u4e24\u4f4d\u4e3a\u76ee\u5f55\u540d\n\u2502   \u2502   \u2514\u2500\u2500 xxxx...   # \u5b9e\u9645\u5bf9\u8c61\u6587\u4ef6\uff08blob / tree / commit\uff09\n\u2502   \u251c\u2500\u2500 info/\n\u2502   \u2514\u2500\u2500 pack/         # \u6253\u5305\u6587\u4ef6\uff08\u5783\u573e\u56de\u6536\u540e\u751f\u6210\uff09\n\u251c\u2500\u2500 refs/\n\u2502   \u251c\u2500\u2500 heads/        # \u5206\u652f\u5f15\u7528\uff08\u6bcf\u4e2a\u5206\u652f\u4e00\u4e2a\u6587\u4ef6\uff0c\u5185\u5bb9\u662f commit hash\uff09\n\u2502   \u251c\u2500\u2500 tags/         # \u6807\u7b7e\u5f15\u7528\n\u2502   \u2514\u2500\u2500 remotes/      # \u8fdc\u7a0b\u5206\u652f\u5f15\u7528\n\u251c\u2500\u2500 index             # \u6682\u5b58\u533a\uff08staging area\uff09\n\u2514\u2500\u2500 logs/             # \u5f15\u7528\u65e5\u5fd7\uff08reflog\uff09\n```\n\n### 2.2 \u4e09\u79cd\u72b6\u6001\u548c\u4e09\u4e2a\u533a\u57df\n\nGit \u4e2d\u7684\u6587\u4ef6\u6c38\u8fdc\u5904\u4e8e\u4e09\u79cd\u72b6\u6001\u4e4b\u4e00\uff1a\n\n```\n\u5de5\u4f5c\u76ee\u5f55               \u6682\u5b58\u533a                  Git \u4ed3\u5e93\n(Working Dir)    \u2192    (Staging Area)    \u2192    (Repository)\n                        index                  objects/\n   modified            staged                 committed\n```\n\n```bash\n# \u67e5\u770b\u6587\u4ef6\u72b6\u6001\ngit status\n\n# \u5178\u578b\u8f93\u51fa\u89e3\u8bfb\uff1a\n# Untracked  \u2192 \u65b0\u6587\u4ef6\uff0cGit \u4e0d\u77e5\u9053\u5b83\u7684\u5b58\u5728\n# Modified   \u2192 \u5df2\u8ddf\u8e2a\u7684\u6587\u4ef6\u88ab\u4fee\u6539\u4e86\uff0c\u4f46\u8fd8\u6ca1\u6682\u5b58\n# Staged     \u2192 \u4fee\u6539\u5df2\u88ab\u52a0\u5165\u6682\u5b58\u533a\uff0c\u7b49\u5f85 commit\n# Committed  \u2192 \u5b89\u5168\u5b58\u5165\u672c\u5730\u6570\u636e\u5e93\n```\n\n### 2.3 \u56db\u5bf9\u8c61\u6a21\u578b\n\nGit \u5185\u90e8\u53ea\u6709\u56db\u79cd\u5bf9\u8c61\u7c7b\u578b\uff0c\u7406\u89e3\u5b83\u4eec\u5c31\u7406\u89e3\u4e86 Git\uff1a\n\n```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502              commit                   \u2502\n\u2502  tree:    <tree-hash>                \u2502\n\u2502  parent:  <parent-commit-hash>       \u2502\n\u2502  author:  Frank <sunangie@126.com>   \u2502\n\u2502  message: \"Add login feature\"        \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n           \u2502\n    \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n    \u2502      tree        \u2502\n    \u2502  src/    \u2192 <hash>\u2502  \u2190 \u76ee\u5f55\uff08tree \u6307\u5411 blob \u6216 tree\uff09\n    \u2502  README  \u2192 <hash>\u2502\n    \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n           \u2502\n    \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n    \u2502      blob        \u2502  \u2190 \u6587\u4ef6\u5185\u5bb9\n    \u2502  \"print('hello') \u2502     \u6ce8\u610f\uff1ablob \u53ea\u5b58\u5185\u5bb9\uff0c\u4e0d\u5b58\u6587\u4ef6\u540d\uff01\n    \u2502   world'\\\\\"       \u2502     \u6587\u4ef6\u540d\u5b58\u5728 tree \u5bf9\u8c61\u91cc\n    \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n**\u5e95\u5c42\u9a8c\u8bc1\uff1a**\n\n```bash\n# \u67e5\u770b\u4e00\u4e2a commit \u7684\u5185\u90e8\u7ed3\u6784\ngit cat-file -p HEAD\n\n# \u8f93\u51fa\u793a\u4f8b\uff1a\n# tree 4b825dc642cb6eb9a060e54bf8993c2c4ea9a8e2\n# parent 1a2b3c4d5e6f...\n# author Frank <sunangie@126.com> 1700000000 +0800\n# committer Frank <sunangie@126.com> 1700000000 +0800\n#\n# Add login feature\n\n# \u7ee7\u7eed\u6df1\u5165\uff0c\u67e5\u770b tree \u5bf9\u8c61\ngit cat-file -p 4b825dc6\n\n# \u8f93\u51fa\uff1a\n# 100644 blob e69de29bb2...    README.md\n# 040000 tree a1b2c3d4e5...    src\n\n# \u518d\u6df1\u5165\uff0c\u67e5\u770b blob \u5185\u5bb9\ngit cat-file -p e69de29b\n```\n\n> **\u5173\u952e\u6d1e\u5bdf\uff1a** commit \u6307\u5411 tree\uff0ctree \u6307\u5411 blob \u6216 tree\u3002\u8fd9\u662f\u4e00\u4e2a**\u5185\u5bb9\u5bfb\u5740**\u7684\u6587\u4ef6\u7cfb\u7edf \u2014 \u4f60\u53ef\u4ee5\u628a Git \u770b\u4f5c\u4e00\u4e2a\u8ff7\u4f60\u6587\u4ef6\u7cfb\u7edf\uff0c\u6240\u6709\u5185\u5bb9\u901a\u8fc7 SHA-1 hash \u5bfb\u5740\u3002\n\n### 2.4 \u5206\u652f\u7684\u672c\u8d28\n\n**\u5206\u652f\u53ea\u662f\u4e00\u4e2a\u6307\u5411 commit \u7684\u6307\u9488\u3002**\n\n```\n# .git/refs/heads/main \u7684\u5185\u5bb9\uff1a\n$ cat .git/refs/heads/main\n1a2b3c4d5e6f7890abcdef1234567890abcdef12\n```\n\n\u5c31\u8fd9\u4e48\u7b80\u5355 \u2014 \u4e00\u4e2a 40 \u5b57\u7b26\u7684 SHA-1 hash\uff0c\u5b58\u5728\u4e00\u4e2a\u6587\u4ef6\u91cc\u3002\n\n```\nmain\n \u2502\n \u25bc\nA \u2190 B \u2190 C \u2190 D\n         \u25b2\n         \u2502\n      feature\n```\n\n- `main` \u6307\u5411 D\n- `feature` \u4e5f\u6307\u5411 D\uff08\u521a\u521b\u5efa\u7684\uff09\n- \u5f53\u4f60 checkout \u5230 `feature` \u5e76 commit\uff0c`feature` \u5c31\u4f1a\u524d\u79fb\n- `main` \u4e0d\u52a8\uff0c\u76f4\u5230 merge \u6216 commit\n\n**HEAD \u662f\u4ec0\u4e48\uff1f** HEAD \u662f\u4e00\u4e2a\u7279\u6b8a\u7684\u6307\u9488\uff0c\u6307\u5411\u4f60\u5f53\u524d\u6240\u5728\u7684 commit\u3002\u901a\u5e38\u5b83\u6307\u5411\u4e00\u4e2a\u5206\u652f\uff08detached HEAD \u65f6\u76f4\u63a5\u6307\u5411 commit\uff09\u3002\n\n```bash\n# HEAD \u7684\u5185\u5bb9\uff08\u901a\u5e38\u662f\u7b26\u53f7\u5f15\u7528\uff09\n$ cat .git/HEAD\nref: refs/heads/feature/login\n\n# detached HEAD \u65f6\u76f4\u63a5\u6307\u5411 commit\n$ cat .git/HEAD\n1a2b3c4d5e6f7890abcdef1234567890abcdef12\n```\n\n---\n\n## \u4e09\u3001Git \u57fa\u7840\u547d\u4ee4\n\n### 3.1 init / clone \u2014 \u4ed3\u5e93\u7684\u8bde\u751f\n\n```bash\n# \u4ece\u96f6\u5f00\u59cb\uff1a\u5728\u5f53\u524d\u76ee\u5f55\u521d\u59cb\u5316\ngit init\ngit init my-project    # \u5728 my-project/ \u4e0b\u521d\u59cb\u5316\n\n# \u4ece\u8fdc\u7a0b\u83b7\u53d6\uff1a\u514b\u9686\u5b8c\u6574\u4ed3\u5e93\ngit clone https://github.com/user/repo.git\ngit clone git@github.com:user/repo.git          # SSH\uff08\u63a8\u8350\uff09\ngit clone git@github.com:user/repo.git my-dir   # \u6307\u5b9a\u76ee\u5f55\u540d\ngit clone --depth 1 git@github.com:user/repo.git # \u6d45\u514b\u9686\uff08\u53ea\u8981\u6700\u65b0\u7248\u672c\uff09\ngit clone --branch develop git@github.com:user/repo.git # \u514b\u9686\u6307\u5b9a\u5206\u652f\n```\n\n> **\u6d45\u514b\u9686\uff08--depth 1\uff09\uff1a** \u53ea\u4e0b\u8f7d\u6700\u65b0\u4e00\u4e2a commit\uff0c\u4e0d\u4e0b\u8f7d\u5386\u53f2\u3002\u9002\u5408 CI \u73af\u5883\u6216\u5927\u578b\u4ed3\u5e93\u3002\u6ce8\u610f\uff1a\u6d45\u514b\u9686\u4e0d\u80fd push \u56de\u539f\u4ed3\u5e93\uff08\u5386\u53f2\u4e0d\u5b8c\u6574\uff09\uff0c\u9700\u8981\u5148 `git fetch --unshallow`\u3002\n\n### 3.2 add / commit \u2014 \u5feb\u7167\u7684\u751f\u6210\n\n```bash\n# \u5c06\u4fee\u6539\u52a0\u5165\u6682\u5b58\u533a\ngit add file.txt              # \u6dfb\u52a0\u5355\u4e2a\u6587\u4ef6\ngit add src/                  # \u6dfb\u52a0\u6574\u4e2a\u76ee\u5f55\ngit add .                     # \u6dfb\u52a0\u5f53\u524d\u76ee\u5f55\u6240\u6709\u4fee\u6539\ngit add -A                    # \u6dfb\u52a0\u6240\u6709\u4fee\u6539\uff08\u5305\u62ec\u5220\u9664\uff09\ngit add -p                    # \u4ea4\u4e92\u5f0f\u6682\u5b58\uff0c\u9010\u5757\u9009\u62e9\uff08\u63a8\u8350\uff01\uff09\n\n# \u63d0\u4ea4\u5feb\u7167\ngit commit -m \"feat: add login feature\"\ngit commit -a -m \"fix: correct typo\"        # \u8df3\u8fc7 add\uff0c\u76f4\u63a5 commit \u6240\u6709\u5df2\u8ddf\u8e2a\u6587\u4ef6\u7684\u4fee\u6539\ngit commit --amend                           # \u4fee\u6539\u6700\u540e\u4e00\u6b21 commit\uff08\u614e\u7528\uff0c\u89c1\u4e0b\u65b9\u8bf4\u660e\uff09\n```\n\n**`git add -p` \u5b9e\u6218 \u2014 \u6700\u88ab\u4f4e\u4f30\u7684\u547d\u4ee4\uff1a**\n\n```bash\n$ git add -p\ndiff --git a/src/app.py b/src/app.py\n@@ -10,6 +10,10 @@\n     return data\n\n+def login(user, password):       \u2190 Git \u5c55\u793a\u8fd9\u4e2a\u5757\n+    if auth_service.verify(user, password):\n+        return create_session(user)\n+    raise AuthError()\n+\n def main():\n     app.run()\n\n(1/1) Stage this hunk [y,n,q,a,d,e,?]? y\n```\n\n\u8fd9\u6837\u4f60\u53ef\u4ee5**\u7cbe\u786e\u63a7\u5236**\u6bcf\u6b21 commit \u5305\u542b\u4ec0\u4e48 \u2014 \u5373\u4f7f\u5728\u4e00\u4e2a\u6587\u4ef6\u91cc\u6539\u4e86\u591a\u4e2a\u65e0\u5173\u7684\u4e8b\u60c5\uff0c\u4e5f\u53ef\u4ee5\u5206\u6279\u63d0\u4ea4\u3002\n\n**`--amend` \u7684\u9677\u9631\uff1a**\n\n```bash\n# \u26a0\ufe0f \u53ea\u5728 commit \u8fd8\u6ca1 push \u65f6\u4f7f\u7528\uff01\ngit commit --amend -m \"better message\"\n\n# \u5982\u679c\u5df2\u7ecf push \u4e86\uff0c--amend \u4f1a\u91cd\u5199\u5386\u53f2\uff0c\u9700\u8981\u7528 --force\n# \u8fd9\u5728\u5171\u4eab\u5206\u652f\u4e0a\u662f\u707e\u96be\u6027\u7684 \u2014 \u4f1a\u8986\u76d6\u522b\u4eba\u7684\u5de5\u4f5c\n```\n\n### 3.3 status / log / diff \u2014 \u72b6\u6001\u611f\u77e5\n\n```bash\n# \u67e5\u770b\u5de5\u4f5c\u533a\u72b6\u6001\ngit status\ngit status -s                 # \u7b80\u77ed\u683c\u5f0f\n\n# \u67e5\u770b\u63d0\u4ea4\u5386\u53f2\ngit log                       # \u5b8c\u6574\u5386\u53f2\ngit log --oneline             # \u4e00\u884c\u4e00\u4e2a commit\ngit log --graph --all --decorate  # \u5206\u652f\u56fe\uff08\u5f3a\u70c8\u63a8\u8350\uff09\ngit log -3                    # \u6700\u8fd1 3 \u6761\ngit log --author=\"Frank\"      # \u6309\u4f5c\u8005\u7b5b\u9009\ngit log --since=\"2026-06-01\"  # \u6309\u65e5\u671f\u7b5b\u9009\ngit log --grep=\"login\"        # \u641c\u7d22 commit message\ngit log -S \"function_name\"    # \u641c\u7d22\u4ee3\u7801\u53d8\u66f4\u5185\u5bb9\uff08pickaxe\uff09\ngit log --stat                # \u663e\u793a\u6587\u4ef6\u53d8\u66f4\u7edf\u8ba1\n\n# \u67e5\u770b\u5dee\u5f02\ngit diff                      # \u5de5\u4f5c\u533a vs \u6682\u5b58\u533a\uff08\u8fd8\u6ca1 add \u7684\u6539\u52a8\uff09\ngit diff --staged             # \u6682\u5b58\u533a vs \u6700\u65b0 commit\uff08\u5df2 add \u4f46\u672a commit \u7684\uff09\ngit diff HEAD                 # \u5de5\u4f5c\u533a vs \u6700\u65b0 commit\uff08\u6240\u6709\u672a\u63d0\u4ea4\u7684\u6539\u52a8\uff09\ngit diff main..feature        # \u4e24\u4e2a\u5206\u652f\u7684\u5dee\u5f02\ngit diff --word-diff          # \u8bcd\u7ea7\u522b\u5dee\u5f02\uff08\u6bd4\u884c\u7ea7\u522b\u66f4\u7ec6\u817b\uff09\n```\n\n**\u63a8\u8350\u522b\u540d\uff08\u52a0\u5165 `~/.gitconfig`\uff09\uff1a**\n\n```ini\n[alias]\n    lg = log --graph --oneline --all --decorate\n    lga = log --graph --oneline --all --decorate --author-date-order\n    st = status -s\n    df = diff --word-diff\n    co = checkout\n    br = branch\n    ci = commit\n```\n\n### 3.4 branch / checkout / switch \u2014 \u5206\u652f\u64cd\u4f5c\n\n```bash\n# \u67e5\u770b\u5206\u652f\ngit branch                    # \u672c\u5730\u5206\u652f\u5217\u8868\ngit branch -a                 # \u5305\u62ec\u8fdc\u7a0b\u5206\u652f\ngit branch -v                 # \u663e\u793a\u6bcf\u4e2a\u5206\u652f\u6700\u540e\u4e00\u6b21 commit\n\n# \u521b\u5efa\u5206\u652f\ngit branch feature/login      # \u521b\u5efa\u4f46\u4e0d\u5207\u6362\ngit checkout -b feature/login # \u521b\u5efa\u5e76\u5207\u6362\uff08\u7ecf\u5178\u5199\u6cd5\uff09\ngit switch -c feature/login   # \u521b\u5efa\u5e76\u5207\u6362\uff08Git 2.23+ \u63a8\u8350\uff09\n\n# \u5207\u6362\u5206\u652f\ngit checkout feature/login    # \u7ecf\u5178\u5199\u6cd5\ngit switch feature/login      # \u65b0\u5199\u6cd5\uff08\u8bed\u4e49\u66f4\u6e05\u6670\uff09\n\n# \u5220\u9664\u5206\u652f\ngit branch -d feature/login   # \u5b89\u5168\u5220\u9664\uff08\u5df2 merge \u7684\uff09\ngit branch -D feature/login   # \u5f3a\u5236\u5220\u9664\uff08\u672a merge \u7684\u4e5f\u5220\uff09\n\n# \u91cd\u547d\u540d\u5206\u652f\ngit branch -m old-name new-name\n```\n\n> **checkout vs switch\uff1a** `git checkout` \u627f\u62c5\u4e86\u592a\u591a\u804c\u8d23\uff08\u5207\u6362\u5206\u652f + \u6062\u590d\u6587\u4ef6\uff09\uff0cGit 2.23 \u5f15\u5165\u4e86 `git switch`\uff08\u53ea\u5207\u6362\u5206\u652f\uff09\u548c `git restore`\uff08\u53ea\u6062\u590d\u6587\u4ef6\uff09\uff0c\u8bed\u4e49\u66f4\u6e05\u6670\u3002\n\n### 3.5 merge / rebase \u2014 \u5408\u5e76\u7b56\u7565\u8be6\u89e3\n\n\u8fd9\u662f Git \u4e2d\u6700\u9700\u8981\u7406\u89e3\u7684\u547d\u4ee4\u3002\u4e24\u79cd\u65b9\u5f0f\u5b9e\u73b0\u540c\u4e00\u4e2a\u76ee\u6807\uff1a\u628a\u4e00\u4e2a\u5206\u652f\u7684\u6539\u52a8\u5408\u5e76\u5230\u53e6\u4e00\u4e2a\u5206\u652f\u3002\n\n**Merge\uff08\u5408\u5e76\uff09\u2014 \u4fdd\u7559\u771f\u5b9e\u5386\u53f2\uff1a**\n\n```\n# \u521d\u59cb\u72b6\u6001\n     E \u2190 feature\n    /\nA \u2190 B \u2190 C \u2190 D \u2190 main\n\n# git checkout main && git merge feature\n     E \u2190 feature\n    / \\\nA \u2190 B \u2190 C \u2190 D \u2190 M \u2190 main  \u2190 M \u662f merge commit\n```\n\n```bash\ngit checkout main\ngit merge feature/login\n\n# \u51b2\u7a81\u65f6\uff1a\n# <<<<<<< HEAD\n# \u5f53\u524d\u5206\u652f\u7684\u4ee3\u7801\n# =======\n# \u8981\u5408\u5e76\u8fdb\u6765\u7684\u4ee3\u7801\n# >>>>>>> feature/login\n```\n\n**Rebase\uff08\u53d8\u57fa\uff09\u2014 \u91cd\u5199\u5386\u53f2\u4f7f\u5176\u7ebf\u6027\uff1a**\n\n```\n# \u521d\u59cb\u72b6\u6001\n     E \u2190 feature\n    /\nA \u2190 B \u2190 C \u2190 D \u2190 main\n\n# git checkout feature && git rebase main\nA \u2190 B \u2190 C \u2190 D \u2190 E' \u2190 feature  \u2190 \u6ce8\u610f E' \u662f\u5168\u65b0\u7684 commit\n                \u2191\n               main\n```\n\n```bash\ngit checkout feature/login\ngit rebase main\n\n# \u5982\u679c\u51b2\u7a81\uff0c\u9010\u4e2a\u5904\u7406\uff1a\n# 1. \u89e3\u51b3\u51b2\u7a81\u6587\u4ef6\n# 2. git add \u51b2\u7a81\u6587\u4ef6\n# 3. git rebase --continue  \uff08\u7ee7\u7eed\u4e0b\u4e2a commit\uff09\n# 4. git rebase --abort     \uff08\u653e\u5f03\u6574\u4e2a rebase\uff09\n```\n\n**\u5982\u4f55\u9009\u62e9\uff1f**\n\n| \u573a\u666f | \u63a8\u8350 | \u539f\u56e0 |\n|------|------|------|\n| \u516c\u5171\u5206\u652f\uff08main / develop\uff09 | Merge | \u4e0d\u91cd\u5199\u5386\u53f2\uff0c\u4e0d\u7834\u574f\u4ed6\u4eba\u5de5\u4f5c |\n| \u4e2a\u4eba\u529f\u80fd\u5206\u652f | Rebase | \u4fdd\u6301\u5386\u53f2\u5e72\u51c0\u7ebf\u6027 |\n| Pull Request \u5408\u5e76\u5230 main | Squash Merge | \u4e00\u4e2a\u529f\u80fd\u4e00\u4e2a commit |\n| \u9700\u8981\u4fdd\u7559\u5206\u652f\u5f00\u53d1\u8fc7\u7a0b\u7ec6\u8282 | Merge\uff08--no-ff\uff09 | \u4fdd\u7559\u6240\u6709 commit \u548c\u5206\u652f\u62d3\u6251 |\n\n**Interactive Rebase \u2014 \u5386\u53f2\u7f16\u8f91\u795e\u5668\uff1a**\n\n```bash\n# \u7f16\u8f91\u6700\u8fd1 3 \u4e2a commit\ngit rebase -i HEAD~3\n\n# \u8fdb\u5165\u7f16\u8f91\u5668\uff1a\npick abc1234 feat: add login\npick def5678 fix: typo\npick ghi9012 wip: debugging\n\n# \u4fee\u6539\u4e3a\uff1a\npick abc1234 feat: add login\nfixup def5678 fix: typo        \u2190 squash \u5230\u4e0a\u4e00\u4e2a\uff0c\u4e22\u5f03 message\nreword ghi9012 wip: debugging  \u2190 \u4fdd\u7559\u4f46\u4fee\u6539 message\n```\n\n**\u53ef\u7528\u64cd\u4f5c\uff1a**\n- `pick` \u2014 \u4fdd\u7559\n- `reword` \u2014 \u4fdd\u7559\u4f46\u4fee\u6539 message\n- `squash` \u2014 \u5408\u5e76\u5230\u4e0a\u4e00\u4e2a\uff0c\u5408\u5e76 message\n- `fixup` \u2014 \u5408\u5e76\u5230\u4e0a\u4e00\u4e2a\uff0c\u4e22\u5f03 message\n- `drop` \u2014 \u5220\u9664\u8fd9\u4e2a commit\n- `edit` \u2014 \u505c\u4e0b\u6765\u4fee\u6539\u8fd9\u4e2a commit \u7684\u5185\u5bb9\n\n> **\u9ec4\u91d1\u6cd5\u5219\uff1a\u6c38\u8fdc\u4e0d\u8981 rebase \u5df2\u7ecf push \u5230\u516c\u5171\u4ed3\u5e93\u7684 commit\u3002** \u53d8\u57fa\u4f1a\u4ea7\u751f\u65b0\u7684 commit hash\uff0c\u4efb\u4f55\u57fa\u4e8e\u65e7 hash \u7684\u5de5\u4f5c\u90fd\u4f1a\u65ad\u88c2\u3002\n\n### 3.6 reset / revert / restore \u2014 \u64a4\u9500\u7684\u827a\u672f\n\n\u8fd9\u4e09\u4e2a\u547d\u4ee4\u662f Git \u4e2d\u6df7\u6dc6\u6700\u591a\u7684\u5730\u65b9\u3002\u4e00\u53e5\u8bdd\u533a\u5206\uff1a\n\n| \u547d\u4ee4 | \u505a\u4ec0\u4e48 | \u5f71\u54cd\u5386\u53f2\uff1f | \u5b89\u5168\u7a0b\u5ea6 |\n|------|--------|-----------|----------|\n| `git revert` | \u521b\u5efa\u65b0 commit \u64a4\u9500\u65e7 commit | \u5426\uff08\u8ffd\u52a0\uff09 | \ud83d\udfe2 \u5b89\u5168 |\n| `git reset` | \u79fb\u52a8\u5206\u652f\u6307\u9488\uff0c\u4e22\u5f03 commit | \u662f\uff08\u91cd\u5199\uff09 | \ud83d\udd34 \u5371\u9669 |\n| `git restore` | \u6062\u590d\u6587\u4ef6\u5230\u67d0\u4e2a\u7248\u672c | \u5426 | \ud83d\udfe2 \u5b89\u5168 |\n\n```bash\n# revert \u2014 \u5b89\u5168\u64a4\u9500\uff08\u63a8\u8350\u7528\u4e8e\u516c\u5171\u5206\u652f\uff09\ngit revert abc1234                    # \u64a4\u9500\u90a3\u4e2a commit\uff0c\u751f\u6210\u65b0\u7684 revert commit\ngit revert abc1234..def5678           # \u64a4\u9500\u4e00\u4e2a\u8303\u56f4\n\n# reset \u2014 \u91cd\u5199\u5386\u53f2\uff08\u53ea\u7528\u5728\u81ea\u5df1\u7684\u5206\u652f\uff09\ngit reset --soft HEAD~1               # \u64a4\u9500 commit\uff0c\u6539\u52a8\u7559\u5728\u6682\u5b58\u533a\ngit reset --mixed HEAD~1              # \u64a4\u9500 commit + unstage\uff0c\u6539\u52a8\u7559\u5728\u5de5\u4f5c\u533a\uff08\u9ed8\u8ba4\uff09\ngit reset --hard HEAD~1               # \u64a4\u9500 commit + unstage + \u4e22\u5f03\u6539\u52a8\uff08\u26a0\ufe0f \u5f7b\u5e95\u5220\u9664\uff09\n\n# restore \u2014 \u6062\u590d\u6587\u4ef6\uff08Git 2.23+\uff09\ngit restore file.txt                  # \u4e22\u5f03\u5de5\u4f5c\u533a\u7684\u4fee\u6539\uff08\u56de\u5230\u6682\u5b58\u533a\u72b6\u6001\uff09\ngit restore --staged file.txt         # \u53d6\u6d88\u6682\u5b58\uff08unstage\uff09\ngit restore --source=HEAD~2 file.txt  # \u6062\u590d\u5230 2 \u4e2a commit \u4e4b\u524d\u7684\u7248\u672c\n```\n\n**reset \u4e09\u79cd\u6a21\u5f0f\u7684\u5bf9\u6bd4\uff1a**\n\n```\n--soft:   \u53ea\u79fb\u52a8 HEAD \u2192 commit \u7684\u5185\u5bb9\u56de\u5230\u6682\u5b58\u533a\n--mixed:  \u79fb\u52a8 HEAD + \u66f4\u65b0\u6682\u5b58\u533a \u2192 commit \u7684\u5185\u5bb9\u56de\u5230\u5de5\u4f5c\u533a\n--hard:   \u79fb\u52a8 HEAD + \u66f4\u65b0\u6682\u5b58\u533a + \u8986\u76d6\u5de5\u4f5c\u533a \u2192 \u4e00\u5207\u56de\u5230\u6307\u5b9a\u72b6\u6001\n```\n\n**\u5178\u578b\u5de5\u4f5c\u6d41\u793a\u4f8b\uff1a**\n\n```bash\n# \u573a\u666f\uff1a\u521a commit \u4e86\uff0c\u4f46\u53d1\u73b0\u6f0f\u4e86\u4e00\u4e2a\u6587\u4ef6\ngit add forgotten-file.txt\ngit commit --amend --no-edit          # \u8ffd\u52a0\u5230\u4e0a\u4e00\u4e2a commit\n\n# \u573a\u666f\uff1acommit message \u5199\u9519\u4e86\ngit commit --amend -m \"correct message\"\n\n# \u573a\u666f\uff1acommit \u5230\u9519\u8bef\u7684\u5206\u652f\u4e86\ngit log --oneline -1                  # \u8bb0\u4e0b commit hash\ngit checkout correct-branch\ngit cherry-pick <commit-hash>         # \u628a\u90a3\u4e2a commit \u6458\u8fc7\u6765\ngit checkout wrong-branch\ngit reset --hard HEAD~1               # \u4ece\u9519\u8bef\u5206\u652f\u5220\u9664\n```\n\n### 3.7 stash / cherry-pick \u2014 \u7075\u6d3b\u5de5\u5177\u7bb1\n\n```bash\n# stash \u2014 \u6682\u5b58\u672a\u5b8c\u6210\u7684\u5de5\u4f5c\ngit stash                             # \u6682\u5b58\u6240\u6709\u6539\u52a8\ngit stash push -m \"WIP: login form\"   # \u9644\u5e26\u63cf\u8ff0\ngit stash list                        # \u67e5\u770b\u6682\u5b58\u5217\u8868\ngit stash pop                         # \u6062\u590d\u6700\u8fd1\u4e00\u6b21\u6682\u5b58\u5e76\u5220\u9664\ngit stash apply stash@{1}             # \u6062\u590d\u6307\u5b9a\u6682\u5b58\u4f46\u4e0d\u5220\u9664\ngit stash drop stash@{0}              # \u5220\u9664\u6307\u5b9a\u6682\u5b58\ngit stash show -p stash@{0}           # \u67e5\u770b\u6682\u5b58\u5185\u5bb9\n\n# cherry-pick \u2014 \u6458\u53d6\u6307\u5b9a commit \u5230\u5f53\u524d\u5206\u652f\ngit cherry-pick abc1234                # \u5355\u4e2a commit\ngit cherry-pick abc1234..def5678       # \u8303\u56f4\uff08\u4e0d\u5305\u542b abc1234\uff09\ngit cherry-pick abc1234^..def5678      # \u8303\u56f4\uff08\u5305\u542b abc1234\uff09\n```\n\n### 3.8 tag \u2014 \u91cc\u7a0b\u7891\u6807\u8bb0\n\n```bash\n# \u8f7b\u91cf\u6807\u7b7e\uff08\u53ea\u662f\u4e00\u4e2a\u6307\u5411 commit \u7684\u6307\u9488\uff09\ngit tag v1.0.0\n\n# \u9644\u6ce8\u6807\u7b7e\uff08\u5305\u542b\u4f5c\u8005\u3001\u65e5\u671f\u3001message\uff0c\u63a8\u8350\u7528\u4e8e\u53d1\u5e03\uff09\ngit tag -a v1.0.0 -m \"Release version 1.0.0\"\n\n# \u67e5\u770b\u6807\u7b7e\ngit tag                               # \u5217\u51fa\u6240\u6709\u6807\u7b7e\ngit show v1.0.0                       # \u67e5\u770b\u6807\u7b7e\u8be6\u60c5\n\n# \u63a8\u9001\u6807\u7b7e\ngit push origin v1.0.0                # \u63a8\u9001\u5355\u4e2a\u6807\u7b7e\ngit push origin --tags                # \u63a8\u9001\u6240\u6709\u6807\u7b7e\n\n# \u5220\u9664\u6807\u7b7e\ngit tag -d v1.0.0                     # \u5220\u9664\u672c\u5730\u6807\u7b7e\ngit push origin --delete v1.0.0       # \u5220\u9664\u8fdc\u7a0b\u6807\u7b7e\n```\n\n> **\u6807\u7b7e vs \u5206\u652f\uff1a** \u6807\u7b7e\u662f\u56fa\u5b9a\u7684\uff08\u6307\u5411\u4e00\u4e2a\u6c38\u4e0d\u79fb\u52a8\u7684 commit\uff09\uff0c\u5206\u652f\u662f\u79fb\u52a8\u7684\uff08\u968f\u65b0 commit \u524d\u79fb\uff09\u3002\u7528\u6807\u7b7e\u6807\u8bb0\u53d1\u5e03\u7248\u672c\uff0c\u7528\u5206\u652f\u8fdb\u884c\u5f00\u53d1\u3002\n\n---\n\n## \u56db\u3001Git \u8fdc\u7a0b\u534f\u4f5c\n\n### 4.1 remote / fetch / pull / push \u2014 \u540c\u6b65\u673a\u5236\n\n```bash\n# \u7ba1\u7406\u8fdc\u7a0b\u4ed3\u5e93\ngit remote -v                                    # \u67e5\u770b\u8fdc\u7a0b\u4ed3\u5e93\ngit remote add upstream git@github.com:org/repo.git  # \u6dfb\u52a0\u8fdc\u7a0b\u4ed3\u5e93\ngit remote rename origin upstream                # \u91cd\u547d\u540d\ngit remote remove upstream                       # \u5220\u9664\n\n# fetch \u2014 \u4e0b\u8f7d\u8fdc\u7a0b\u6570\u636e\u4f46\u4e0d\u5408\u5e76\ngit fetch origin                                 # \u4e0b\u8f7d\u6240\u6709\u5206\u652f\ngit fetch origin main                            # \u53ea\u4e0b\u8f7d main \u5206\u652f\ngit fetch --prune                                # \u4e0b\u8f7d\u5e76\u5220\u9664\u672c\u5730\u5df2\u4e0d\u5b58\u5728\u7684\u8fdc\u7a0b\u5206\u652f\u5f15\u7528\n\n# pull \u2014 fetch + merge\uff08\u6216 rebase\uff09\ngit pull origin main                             # \u9ed8\u8ba4\u662f fetch + merge\ngit pull --rebase origin main                    # fetch + rebase\uff08\u63a8\u8350\uff09\n\n# push \u2014 \u4e0a\u4f20\u672c\u5730\u6570\u636e\ngit push origin main                             # \u63a8\u9001 main \u5206\u652f\ngit push origin feature/login                    # \u63a8\u9001\u7279\u5b9a\u5206\u652f\ngit push -u origin feature/login                 # \u63a8\u9001\u5e76\u8bbe\u7f6e\u4e0a\u6e38\uff08\u4e0b\u6b21\u76f4\u63a5 git push\uff09\ngit push --force-with-lease                      # \u5b89\u5168\u5f3a\u5236\u63a8\u9001\uff08\u63a8\u8350\u66ff\u4ee3 --force\uff09\ngit push origin --delete feature/login           # \u5220\u9664\u8fdc\u7a0b\u5206\u652f\n```\n\n**fetch vs pull \u7684\u533a\u522b\uff1a**\n\n```bash\n# fetch = \u4e0b\u8f7d\u4f46\u4e0d\u5408\u5e76\uff08\u5b89\u5168\uff0c\u63a8\u8350\uff09\ngit fetch origin\ngit log origin/main     # \u67e5\u770b\u8fdc\u7a0b\u6709\u4ec0\u4e48\u65b0\u4e1c\u897f\ngit diff main origin/main   # \u770b\u770b\u5dee\u5f02\ngit merge origin/main   # \u624b\u52a8\u5408\u5e76\n\n# pull = \u4e0b\u8f7d + \u81ea\u52a8\u5408\u5e76\uff08\u4e00\u6b65\u5230\u4f4d\uff0c\u4f46\u53ef\u80fd\u4ea7\u751f\u610f\u5916\u5408\u5e76\uff09\ngit pull origin main\n\n# \u63a8\u8350\u914d\u7f6e\uff1a\u8ba9 pull \u9ed8\u8ba4\u4f7f\u7528 rebase\ngit config --global pull.rebase true\n```\n\n**`--force-with-lease` \u4e3a\u4ec0\u4e48\u66f4\u5b89\u5168\uff1a**\n\n```bash\n# --force\uff1a\u65e0\u6761\u4ef6\u8986\u76d6\u8fdc\u7a0b\uff08\u5982\u679c\u6709\u4eba\u5728\u4f60\u4e4b\u540e push \u4e86\uff0c\u4f1a\u88ab\u8986\u76d6\u6389\uff09\ngit push --force\n\n# --force-with-lease\uff1a\u53ea\u5728\u8fdc\u7a0b\u548c\u4f60\u7684\u672c\u5730\u8bb0\u5f55\u4e00\u81f4\u65f6\u624d\u63a8\u9001\n# \u5982\u679c\u8fdc\u7a0b\u6709\u522b\u4eba\u63a8\u9001\u7684\u65b0\u5185\u5bb9\uff0c\u63a8\u9001\u4f1a\u5931\u8d25\uff0c\u4fdd\u62a4\u534f\u4f5c\u5b89\u5168\ngit push --force-with-lease\n```\n\n### 4.2 fork vs clone vs branch \u2014 \u534f\u4f5c\u6a21\u5f0f\n\n| \u65b9\u5f0f | \u9002\u7528\u573a\u666f | \u6743\u9650\u8981\u6c42 |\n|------|----------|----------|\n| **Branch** | \u540c\u4e00\u56e2\u961f\uff0c\u540c\u4ed3\u5e93 | Write \u6743\u9650 |\n| **Fork** | \u5f00\u6e90\u8d21\u732e\uff0c\u8de8\u7ec4\u7ec7\u534f\u4f5c | \u65e0\u9700\u539f\u4ed3\u5e93\u6743\u9650 |\n| **Clone** | \u83b7\u53d6\u4ee3\u7801\u5230\u672c\u5730 | \u516c\u5f00\u4ed3\u5e93\u65e0\u9700\u6743\u9650 |\n\n**Fork \u5de5\u4f5c\u6d41\uff1a**\n\n```bash\n# 1. \u5728 GitHub \u4e0a\u70b9\u51fb Fork \u6309\u94ae\uff0cfork \u5230\u81ea\u5df1\u7684\u8d26\u53f7\n# 2. Clone \u81ea\u5df1\u7684 fork\ngit clone git@github.com:my-account/repo.git\ncd repo\n\n# 3. \u6dfb\u52a0\u539f\u59cb\u4ed3\u5e93\u4e3a upstream\ngit remote add upstream git@github.com:original-owner/repo.git\n\n# 4. \u4fdd\u6301\u540c\u6b65\ngit fetch upstream\ngit checkout main\ngit merge upstream/main\ngit push origin main\n\n# 5. \u521b\u5efa\u529f\u80fd\u5206\u652f\u3001\u5f00\u53d1\u3001\u63a8\u9001\ngit checkout -b feature/my-feature\n# ... \u5f00\u53d1 ...\ngit push -u origin feature/my-feature\n\n# 6. \u5728 GitHub \u4e0a\u4ece\u81ea\u5df1\u7684 fork \u521b\u5efa Pull Request \u5230\u539f\u59cb\u4ed3\u5e93\n```\n\n### 4.3 \u51b2\u7a81\u89e3\u51b3\u5b9e\u6218\n\n```bash\n# \u51b2\u7a81\u53d1\u751f\u65f6\uff1a\ngit merge feature/login\n# Auto-merging src/app.py\n# CONFLICT (content): Merge conflict in src/app.py\n# Automatic merge failed; fix conflicts and then commit the result.\n\n# \u6587\u4ef6\u5185\u5bb9\uff1a\n# <<<<<<< HEAD\n# def login():\n#     return auth_email(email, password)\n# =======\n# def login():\n#     return auth_oauth(provider, token)\n# >>>>>>> feature/login\n\n# \u89e3\u51b3\u6b65\u9aa4\uff1a\n# 1. \u624b\u52a8\u7f16\u8f91\u6587\u4ef6\uff0c\u5220\u9664\u6807\u8bb0\uff0c\u4fdd\u7559\u6b63\u786e\u4ee3\u7801\n# 2. git add src/app.py\n# 3. git commit\uff08\u4e0d\u9700\u8981 -m\uff0cGit \u4f1a\u751f\u6210 merge message\uff09\n\n# \u65b9\u4fbf\u7684\u5de5\u5177\uff1a\ngit diff --name-only --diff-filter=U    # \u53ea\u5217\u51fa\u51b2\u7a81\u6587\u4ef6\ngit checkout --ours src/app.py           # \u5168\u9009\u5f53\u524d\u5206\u652f\u7248\u672c\ngit checkout --theirs src/app.py         # \u5168\u9009\u8981\u5408\u5e76\u7684\u7248\u672c\ngit mergetool                            # \u6253\u5f00\u53ef\u89c6\u5316\u5408\u5e76\u5de5\u5177\n```\n\n---\n\n## \u4e94\u3001GitHub \u5e73\u53f0\u6df1\u5ea6\u4f7f\u7528\n\n### 5.1 Issues \u2014 \u4efb\u52a1\u8ffd\u8e2a\n\nIssue \u4e0d\u4ec5\u662f Bug \u62a5\u544a\uff0c\u4e5f\u662f\u529f\u80fd\u8ba8\u8bba\u3001\u4efb\u52a1\u7ba1\u7406\u548c\u77e5\u8bc6\u5e93\u3002\n\n**Issue \u6a21\u677f\uff08`.github/ISSUE_TEMPLATE/bug_report.md`\uff09\uff1a**\n\n```markdown\n---\nname: Bug Report\nabout: \u62a5\u544a\u4e00\u4e2a Bug\ntitle: \"[Bug] \"\nlabels: bug\n---\n\n## \u63cf\u8ff0 (Description)\n\n\u6e05\u6670\u63cf\u8ff0 Bug \u7684\u8868\u73b0\u3002\n\n## \u590d\u73b0\u6b65\u9aa4 (Steps to Reproduce)\n\n1. \u6267\u884c '...'\n2. \u70b9\u51fb '...'\n3. \u770b\u5230\u9519\u8bef '...'\n\n## \u671f\u671b\u884c\u4e3a (Expected Behavior)\n\n\u5e94\u8be5\u53d1\u751f\u4ec0\u4e48\u3002\n\n## \u73af\u5883 (Environment)\n\n- OS: macOS 14.0\n- Browser: Chrome 120\n- Version: v2.1.0\n```\n\n**Issue \u9ad8\u7ea7\u7528\u6cd5\uff1a**\n\n```markdown\n# \u5f15\u7528 PR / commit\nCloses #123          # PR \u5408\u5e76\u65f6\u81ea\u52a8\u5173\u95ed Issue\nFixes #456           # \u540c\u4e0a\nRelated to #789      # \u4e0d\u4f1a\u81ea\u52a8\u5173\u95ed\n\n# \u4efb\u52a1\u5217\u8868\n- [x] \u6dfb\u52a0\u767b\u5f55\u63a5\u53e3\n- [ ] \u7f16\u5199\u5355\u5143\u6d4b\u8bd5\n- [ ] \u66f4\u65b0 API \u6587\u6863\n\n# @ \u63d0\u53ca\u5206\u914d\n@sunailian \u8bf7 review \u8fd9\u4e2a\u8bbe\u8ba1\n```\n\n### 5.2 Pull Requests \u2014 \u4ee3\u7801\u5ba1\u67e5\u6d41\n\n**PR \u7684\u6700\u4f73\u5b9e\u8df5\uff1a**\n\n```markdown\n## \u6982\u8ff0 (Summary)\n\n\u5b9e\u73b0\u7528\u6237 OAuth \u767b\u5f55\u529f\u80fd\uff0c\u652f\u6301 Google \u548c GitHub \u4e24\u79cd\u65b9\u5f0f\u3002\n\n## \u6539\u52a8\u5185\u5bb9 (Changes)\n\n- \u65b0\u589e `OAuthService` \u5904\u7406 OAuth 2.0 \u6d41\u7a0b\n- \u65b0\u589e `config/oauth.yaml` \u914d\u7f6e\u6587\u4ef6\n- \u66f4\u65b0 `User` \u6a21\u578b\u652f\u6301 OAuth provider \u5b57\u6bb5\n\n## \u6d4b\u8bd5 (Testing)\n\n- [x] \u5355\u5143\u6d4b\u8bd5\uff1aOAuthService \u6838\u5fc3\u903b\u8f91\n- [x] \u96c6\u6210\u6d4b\u8bd5\uff1aGoogle / GitHub \u767b\u5f55\u5168\u6d41\u7a0b\n- [x] \u624b\u52a8\u6d4b\u8bd5\uff1a\u5f00\u53d1\u73af\u5883\u5b8c\u6574\u9a8c\u8bc1\n\n## \u622a\u56fe (Screenshots)\n\n![Login Page](https://user-images.githubusercontent.com/...)\n\n## \u5173\u8054 Issue (Related Issues)\n\nCloses #42\n```\n\n**Code Review \u547d\u4ee4\uff08\u8bc4\u8bba\u4e2d\u53ef\u7528\uff09\uff1a**\n\n```markdown\n/suggest    # \u63d0\u51fa\u6539\u8fdb\u5efa\u8bae\uff08GitHub \u4f1a\u751f\u6210\u4e00\u4e2a suggestion block\uff09\n/lgtm       # Looks Good To Me\n/approve    # \u6279\u51c6\n```\n\n### 5.3 Actions / CI \u2014 \u81ea\u52a8\u5316\u6d41\u6c34\u7ebf\n\n**\u57fa\u7840\u5de5\u4f5c\u6d41\uff08`.github/workflows/ci.yml`\uff09\uff1a**\n\n```yaml\nname: CI\n\non:\n  push:\n    branches: [main]\n  pull_request:\n    branches: [main]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n\n      - name: Setup Node.js\n        uses: actions/setup-node@v4\n        with:\n          node-version: '20'\n\n      - name: Install dependencies\n        run: npm ci\n\n      - name: Run linter\n        run: npm run lint\n\n      - name: Run tests\n        run: npm test -- --coverage\n\n      - name: Upload coverage\n        uses: actions/upload-artifact@v4\n        with:\n          name: coverage\n          path: coverage/\n```\n\n**\u5e38\u7528\u7684 Actions \u64cd\u4f5c\uff1a**\n\n```yaml\n# \u7f13\u5b58\u4f9d\u8d56\n- uses: actions/cache@v4\n  with:\n    path: ~/.npm\n    key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}\n\n# \u53d1\u5e03\u5230 GitHub Pages\n- uses: peaceiris/actions-gh-pages@v3\n  with:\n    github_token: ${{ secrets.GITHUB_TOKEN }}\n    publish_dir: ./dist\n\n# Docker \u6784\u5efa\u5e76\u63a8\u9001\n- uses: docker/build-push-action@v5\n  with:\n    push: true\n    tags: ghcr.io/${{ github.repository }}:latest\n```\n\n**Secrets \u7ba1\u7406\uff1a**\n\n```bash\n# \u5728 GitHub \u4ed3\u5e93 Settings \u2192 Secrets and variables \u2192 Actions \u4e2d\u8bbe\u7f6e\n# \u7136\u540e\u5728\u5de5\u4f5c\u6d41\u4e2d\u5f15\u7528\uff1a\n${{ secrets.DEPLOY_KEY }}\n${{ secrets.NPM_TOKEN }}\n```\n\n### 5.4 Projects \u2014 \u9879\u76ee\u7ba1\u7406\n\nGitHub Projects \u662f\u4e00\u4e2a\u770b\u677f\u5f0f\u7684\u9879\u76ee\u7ba1\u7406\u5de5\u5177\uff0c\u53ef\u4ee5\u8de8\u4ed3\u5e93\u7ba1\u7406 Issue \u548c PR\u3002\n\n**\u5173\u952e\u6982\u5ff5\uff1a**\n- **\u89c6\u56fe\uff08View\uff09\uff1a** Table / Board / Roadmap \u4e09\u79cd\u5c55\u793a\u65b9\u5f0f\n- **\u5b57\u6bb5\uff08Field\uff09\uff1a** \u81ea\u5b9a\u4e49\u72b6\u6001\u3001\u4f18\u5148\u7ea7\u3001\u4f30\u7b97\u7b49\n- **\u81ea\u52a8\u5316\uff1a** Issue \u5173\u95ed\u65f6\u81ea\u52a8\u79fb\u52a8\u5361\u7247\n\n**\u63a8\u8350\u914d\u7f6e\uff1a**\n\n| Status | \u542b\u4e49 |\n|--------|------|\n| \ud83d\udccb Backlog | \u5f85\u529e\uff0c\u672a\u6392\u671f |\n| \ud83c\udfd7 In Progress | \u5f00\u53d1\u4e2d |\n| \ud83d\udc40 In Review | \u4ee3\u7801\u5ba1\u67e5\u4e2d |\n| \u2705 Done | \u5df2\u5b8c\u6210 |\n\n### 5.5 Releases \u2014 \u7248\u672c\u53d1\u5e03\n\n```bash\n# \u901a\u8fc7 gh CLI \u521b\u5efa Release\ngh release create v1.0.0 --title \"v1.0.0\" --generate-notes\n\n# \u5e26\u9644\u4ef6\ngh release create v1.0.0 ./dist/binary --title \"v1.0.0\" --notes \"Release notes\"\n\n# \u8349\u7a3f\uff08\u5148\u4fdd\u5b58\u4e0d\u53d1\u5e03\uff09\ngh release create v2.0.0-rc1 --draft --prerelease --generate-notes\n```\n\n**\u8bed\u4e49\u5316\u7248\u672c\uff08SemVer\uff09\uff1a**\n\n```\nv2.1.3\n\u2502 \u2502 \u2502\n\u2502 \u2502 \u2514\u2500\u2500 PATCH\uff1aBug \u4fee\u590d\uff08\u5411\u4e0b\u517c\u5bb9\uff09\n\u2502 \u2514\u2500\u2500\u2500\u2500 MINOR\uff1a\u65b0\u529f\u80fd\uff08\u5411\u4e0b\u517c\u5bb9\uff09\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500 MAJOR\uff1a\u7834\u574f\u6027\u53d8\u66f4\uff08\u4e0d\u517c\u5bb9\uff09\n```\n\n### 5.6 \u5b89\u5168\uff1a\u5206\u652f\u4fdd\u62a4\n\n\u5728\u4ed3\u5e93 Settings \u2192 Branches \u2192 Add branch protection rule\uff1a\n\n```json\n{\n  \"branch\": \"main\",\n  \"required_approving_review_count\": 1,\n  \"dismiss_stale_reviews\": true,\n  \"require_code_owner_reviews\": true,\n  \"required_status_checks\": [\"ci/test\", \"ci/lint\"],\n  \"require_conversation_resolution\": true,\n  \"allow_force_pushes\": false,\n  \"allow_deletions\": false\n}\n```\n\n---\n\n## \u516d\u3001GitHub CLI\uff08gh\uff09\u5b9e\u6218\n\n### 6.1 \u5b89\u88c5\u4e0e\u767b\u5f55\n\n```bash\n# macOS\nbrew install gh\n\n# \u767b\u5f55\uff08\u652f\u6301\u6d4f\u89c8\u5668\u548c token \u4e24\u79cd\u65b9\u5f0f\uff09\ngh auth login\n\n# \u9a8c\u8bc1\ngh auth status\n```\n\n### 6.2 \u5e38\u7528\u547d\u4ee4\u901f\u67e5\n\n```bash\n# ==== Issues ====\ngh issue list                              # \u67e5\u770b Issue \u5217\u8868\ngh issue view 42                           # \u67e5\u770b\u8be6\u60c5\ngh issue create --title \"Bug: login fail\" --body \"Description\"  # \u521b\u5efa\ngh issue close 42                          # \u5173\u95ed\ngh issue reopen 42                         # \u91cd\u65b0\u6253\u5f00\n\n# ==== PR ====\ngh pr list                                 # \u67e5\u770b PR \u5217\u8868\ngh pr view 123                             # \u67e5\u770b\u8be6\u60c5\ngh pr create --title \"feat: OAuth login\" --body \"...\"  # \u521b\u5efa PR\ngh pr checkout 123                         # \u68c0\u51fa PR \u5230\u672c\u5730\ngh pr review 123 --approve                 # \u6279\u51c6\ngh pr review 123 --comment -b \"LGTM!\"     # \u8bc4\u8bba\ngh pr merge 123 --squash                   # Squash \u5408\u5e76\ngh pr merge 123 --rebase                   # Rebase \u5408\u5e76\ngh pr merge 123 --merge                    # \u666e\u901a Merge\n\n# ==== Repo ====\ngh repo clone owner/repo                   # \u514b\u9686\ngh repo create my-project --public --clone # \u521b\u5efa\u5e76\u514b\u9686\ngh repo fork owner/repo --clone            # Fork \u5e76\u514b\u9686\ngh repo view                               # \u67e5\u770b\u4ed3\u5e93\u4fe1\u606f\n\n# ==== Actions ====\ngh run list                                # \u67e5\u770b\u8fd0\u884c\u8bb0\u5f55\ngh run watch                               # \u5b9e\u65f6\u67e5\u770b\u8fd0\u884c\u65e5\u5fd7\ngh workflow run ci.yml                     # \u89e6\u53d1\u5de5\u4f5c\u6d41\n\n# ==== Gist ====\ngh gist create script.py --public          # \u521b\u5efa Gist\ngh gist list                               # \u67e5\u770b Gist \u5217\u8868\n```\n\n---\n\n## \u4e03\u3001\u5de5\u4f5c\u6d41\u5b9e\u6218\n\n### 7.1 Git Flow\n\n\u9002\u5408\u6709\u56fa\u5b9a\u53d1\u5e03\u5468\u671f\u7684\u9879\u76ee\u3002\n\n```\nmain     \u2500\u2500\u25cf\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25cf\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25cf\u2500\u2500\n            \\          / \\          /\ndevelop  \u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\u2500\u2500\u2500\u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\u2500\u2500\n              \\    /\nfeature   \u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\n                   \\\nrelease           \u25cf\u2500\u2500\u25cf\u2500\u2500\u25cf\n                         \\\nhotfix                    \u25cf\u2500\u2500\u25cf\n```\n\n**\u5206\u652f\u7c7b\u578b\uff1a**\n- `main` \u2014 \u751f\u4ea7\u4ee3\u7801\n- `develop` \u2014 \u5f00\u53d1\u4e3b\u7ebf\n- `feature/*` \u2014 \u65b0\u529f\u80fd\n- `release/*` \u2014 \u53d1\u5e03\u51c6\u5907\n- `hotfix/*` \u2014 \u7d27\u6025\u4fee\u590d\n\n### 7.2 GitHub Flow\n\nGitHub \u5b98\u65b9\u63a8\u8350\uff0c\u7b80\u5355\u7075\u6d3b\u3002\n\n```\nmain \u2500\u2500\u25cf\u2500\u2500\u2500\u2500\u25cf\u2500\u2500\u2500\u2500\u25cf\u2500\u2500\u2500\u2500\u25cf\u2500\u2500\u2500\u2500\n        \\   /    /    /\n         \u25cf\u2500\u25cf    /    /\n          feature1  /\n               \u25cf\u2500\u2500\u2500\u25cf\n                feature2\n```\n\n**\u89c4\u5219\uff1a**\n1. `main` \u5206\u652f\u59cb\u7ec8\u53ef\u90e8\u7f72\n2. \u4ece `main` \u521b\u5efa\u63cf\u8ff0\u6027\u5206\u652f\n3. \u6301\u7eed push \u5230\u8fdc\u7a0b\n4. \u5f00 Pull Request \u8ba8\u8bba\n5. \u5408\u5e76\u540e\u7acb\u5373\u90e8\u7f72\n\n### 7.3 Trunk-Based Development\n\n\u9002\u5408\u6301\u7eed\u4ea4\u4ed8\u548c\u9ad8\u9891\u90e8\u7f72\u7684\u56e2\u961f\u3002\n\n```\nmain \u2500\u2500\u25cf\u2500\u25cf\u2500\u25cf\u2500\u25cf\u2500\u25cf\u2500\u25cf\u2500\u25cf\u2500\u2500  \u2190 \u6bcf\u5929\u591a\u6b21\u5408\u5e76\n        \\/ / / / / /\n         \u25cf \u25cf \u25cf \u25cf \u25cf       \u2190 \u77ed\u751f\u547d\u5468\u671f\u5206\u652f\uff08<1\u5929\uff09\n```\n\n**\u6838\u5fc3\u5b9e\u8df5\uff1a**\n- \u76f4\u63a5\u5728 `main` \u4e0a\u5f00\u53d1\uff0c\u6216\u4f7f\u7528\u6781\u77ed\u5206\u652f\uff08<24 \u5c0f\u65f6\uff09\n- \u901a\u8fc7 feature flag \u63a7\u5236\u672a\u5b8c\u6210\u529f\u80fd\u7684\u53ef\u89c1\u6027\n- \u9891\u7e41\u96c6\u6210\uff0c\u5c0f\u6b65\u63d0\u4ea4\n- \u9700\u8981\u9ad8\u5ea6\u6210\u719f\u7684 CI/CD \u548c\u6d4b\u8bd5\n\n### 7.4 \u5982\u4f55\u9009\u578b\n\n| \u6761\u4ef6 | \u63a8\u8350\u5de5\u4f5c\u6d41 |\n|------|-----------|\n| \u6709\u56fa\u5b9a\u53d1\u5e03\u5468\u671f\uff08\u5982\u6bcf\u4e24\u5468\uff09 | Git Flow |\n| \u5c0f\u578b\u56e2\u961f\uff0c\u6301\u7eed\u90e8\u7f72 | GitHub Flow |\n| \u6210\u719f CI/CD\uff0c\u9ad8\u9891\u90e8\u7f72 | Trunk-Based |\n| \u5f00\u6e90\u9879\u76ee\uff0c\u5916\u90e8\u8d21\u732e\u8005 | GitHub Flow + Fork |\n| \u4f01\u4e1a\u5185\u90e8\u9879\u76ee | Git Flow \u6216 GitHub Flow |\n\n---\n\n## \u516b\u3001\u9ad8\u7ea7\u8bdd\u9898\n\n### 8.1 `.gitignore` \u4e0e `.gitattributes`\n\n```gitignore\n# .gitignore \u2014 \u544a\u8bc9 Git \u54ea\u4e9b\u6587\u4ef6\u4e0d\u8ffd\u8e2a\nnode_modules/\n*.log\n.env\ndist/\n.DS_Store\n*.pyc\n__pycache__/\n.vscode/\n\n# \u4f8b\u5916\uff1a! \u5f00\u5934\u7684\u89c4\u5219\u4f1a\u91cd\u65b0\u5305\u542b\n!important.log          # \u8ffd\u8e2a\u8fd9\u4e2a\u7279\u5b9a\u7684 log \u6587\u4ef6\n\n# \u5168\u5c40 gitignore\ngit config --global core.excludesfile ~/.gitignore_global\n```\n\n```gitattributes\n# .gitattributes \u2014 \u63a7\u5236 Git \u5982\u4f55\u5904\u7406\u6587\u4ef6\n# \u7edf\u4e00\u6362\u884c\u7b26\n* text=auto\n\n# \u4e8c\u8fdb\u5236\u6587\u4ef6\u4e0d\u5c1d\u8bd5 diff\n*.png binary\n*.jpg binary\n\n# \u5927\u6587\u4ef6\u7528 LFS \u7ba1\u7406\n*.psd filter=lfs diff=lfs merge=lfs -text\n```\n\n### 8.2 submodule / subtree\n\n```bash\n# submodule \u2014 \u5f15\u7528\u5916\u90e8\u4ed3\u5e93\u7684\u4e00\u4e2a\u7279\u5b9a commit\ngit submodule add git@github.com:user/lib.git libs/mylib\ngit submodule update --init --recursive   # \u514b\u9686\u540e\u521d\u59cb\u5316\u5b50\u6a21\u5757\n\n# \u5b50\u6a21\u5757\u66f4\u65b0\ncd libs/mylib\ngit pull origin main\ncd ../..\ngit add libs/mylib\ngit commit -m \"Update submodule\"\n\n# \u26a0\ufe0f submodule \u7684\u75db\u70b9\uff1a\u9700\u8981\u989d\u5916\u547d\u4ee4\u3001\u5bb9\u6613\u5fd8\u8bb0\u66f4\u65b0\u3001CI \u914d\u7f6e\u590d\u6742\n# \u66ff\u4ee3\u65b9\u6848\uff1a\u7528 subtree \u5c06\u5916\u90e8\u4ee3\u7801\u76f4\u63a5\u7eb3\u5165\u4ed3\u5e93\ngit subtree add --prefix=libs/mylib git@github.com:user/lib.git main --squash\n```\n\n### 8.3 reflog \u2014 \u540e\u6094\u836f\n\n```bash\n# reflog \u8bb0\u5f55\u4e86 HEAD \u7684\u6240\u6709\u79fb\u52a8\ngit reflog\n\n# \u8f93\u51fa\u793a\u4f8b\uff1a\n# abc1234 HEAD@{0}: commit: feat: add login\n# def5678 HEAD@{1}: commit: fix: typo\n# ghi9012 HEAD@{2}: reset: moving to HEAD~1\n\n# \u6062\u590d\u5230\"\u521a\u624d\"\u7684\u72b6\u6001\uff08\u5373\u4f7f\u505a\u4e86 hard reset\uff09\ngit reset --hard HEAD@{1}\n\n# \u6062\u590d\"\u4e22\u5931\"\u7684 commit\ngit checkout -b recovered-branch abc1234\n\n# reflog \u9ed8\u8ba4\u4fdd\u7559 90 \u5929\uff08\u53ef\u8fbe\u5bf9\u8c61\uff09\u6216 30 \u5929\uff08\u4e0d\u53ef\u8fbe\u5bf9\u8c61\uff09\n```\n\n### 8.4 bisect \u2014 \u4e8c\u5206\u6392\u9519\n\n```bash\n# \u5df2\u77e5\uff1av1.0 \u5de5\u4f5c\u6b63\u5e38\uff0c\u5f53\u524d\u7248\u672c\u6709 Bug\n# \u4f46\u4e0d\u77e5\u9053\u662f\u54ea\u4e2a commit \u5f15\u5165\u7684\n\ngit bisect start\ngit bisect bad HEAD              # \u6807\u8bb0\u5f53\u524d\u7248\u672c\u6709\u95ee\u9898\ngit bisect good v1.0.0           # \u6807\u8bb0 v1.0.0 \u662f\u597d\u7684\n\n# Git \u81ea\u52a8 checkout \u5230\u4e2d\u95f4\u67d0\u4e2a commit\n# \u6d4b\u8bd5 \u2192 \u544a\u8bc9 Git \u7ed3\u679c\ngit bisect good                  # \u6216 git bisect bad\n\n# \u91cd\u590d\u76f4\u5230\u627e\u5230\u5143\u51f6\n# abc1234 is the first bad commit\n\n# \u5b8c\u6210\u540e\u9000\u51fa bisect \u6a21\u5f0f\ngit bisect reset\n```\n\n**\u539f\u7406\uff1a** \u5047\u8bbe\u6709 100 \u4e2a\u53ef\u7591 commit\uff0c\u4e8c\u5206\u67e5\u627e\u6700\u591a\u9700\u8981 7 \u6b21\u6d4b\u8bd5\uff08log\u2082(100) \u2248 7\uff09\uff0c\u800c\u4e0d\u662f\u7ebf\u6027\u904d\u5386 100 \u6b21\u3002\n\n### 8.5 hooks \u2014 \u81ea\u52a8\u5316\u94a9\u5b50\n\nGit hooks \u662f\u5b58\u653e\u5728 `.git/hooks/` \u4e0b\u7684\u811a\u672c\uff0c\u5728\u7279\u5b9a\u4e8b\u4ef6\u89e6\u53d1\u65f6\u81ea\u52a8\u6267\u884c\u3002\n\n```bash\n# \u5e38\u7528 hooks\uff1a\n# pre-commit  \u2014 commit \u524d\u8fd0\u884c\uff08\u68c0\u67e5\u4ee3\u7801\u98ce\u683c\u3001\u8fd0\u884c linter\uff09\n# commit-msg  \u2014 \u9a8c\u8bc1 commit message \u683c\u5f0f\n# pre-push    \u2014 push \u524d\u8fd0\u884c\uff08\u8fd0\u884c\u6d4b\u8bd5\uff09\n# post-merge  \u2014 merge \u540e\u8fd0\u884c\uff08\u66f4\u65b0\u4f9d\u8d56\uff09\n\n# pre-commit \u793a\u4f8b\uff08\u68c0\u67e5 Python \u4ee3\u7801\u98ce\u683c\uff09\n#!/bin/bash\n# .git/hooks/pre-commit\npython3 -m ruff check .\nif [ $? -ne 0 ]; then\n    echo \"\u4ee3\u7801\u98ce\u683c\u68c0\u67e5\u5931\u8d25\uff0c\u8bf7\u4fee\u590d\u540e\u518d commit\"\n    exit 1\nfi\n```\n\n**\u63a8\u8350\u4f7f\u7528 pre-commit \u6846\u67b6\uff1a**\n\n```yaml\n# .pre-commit-config.yaml\nrepos:\n  - repo: https://github.com/psf/black\n    rev: 24.1.0\n    hooks:\n      - id: black\n  - repo: https://github.com/astral-sh/ruff-pre-commit\n    rev: v0.1.0\n    hooks:\n      - id: ruff\n```\n\n### 8.6 \u5927\u6587\u4ef6\u5904\u7406\uff08Git LFS\uff09\n\n```bash\n# \u5b89\u88c5 Git LFS\nbrew install git-lfs\ngit lfs install\n\n# \u8ffd\u8e2a\u5927\u6587\u4ef6\u7c7b\u578b\ngit lfs track \"*.psd\"\ngit lfs track \"*.zip\"\ngit lfs track \"*.mp4\"\n\n# \u6b63\u5e38\u4f7f\u7528\ngit add file.psd\ngit commit -m \"Add design file\"\ngit push\n\n# Git LFS \u7684\u539f\u7406\uff1a\n# 1. \u4ed3\u5e93\u4e2d\u53ea\u5b58\u4e00\u4e2a\u6307\u9488\u6587\u4ef6\uff08\u51e0\u767e\u5b57\u8282\uff09\n# 2. \u5b9e\u9645\u5927\u6587\u4ef6\u5b58\u5728 LFS \u670d\u52a1\u5668\u4e0a\n# 3. git clone \u65f6\u4e0b\u8f7d\u6307\u9488\uff0cgit checkout \u65f6\u6309\u9700\u4e0b\u8f7d\u5927\u6587\u4ef6\n```\n\n---\n\n## \u4e5d\u3001\u8e29\u5751\u96c6\u9526\u4e0e\u6700\u4f73\u5b9e\u8df5\n\n### 9.1 \u5e38\u89c1\u9519\u8bef\u4e0e\u4fee\u590d\n\n**1. `detached HEAD` \u72b6\u6001**\n\n```bash\n# \u75c7\u72b6\uff1acheckout \u5230\u67d0\u4e2a commit \u800c\u4e0d\u662f\u5206\u652f\n# \u539f\u56e0\uff1a\u76f4\u63a5 checkout \u4e86\u4e00\u4e2a commit hash \u6216 tag\ngit checkout abc1234\n\n# \u4fee\u590d\uff1a\u521b\u5efa\u65b0\u5206\u652f\ngit checkout -b temp-branch\n```\n\n**2. \u4e0d\u5c0f\u5fc3 `add` \u4e86\u4e0d\u8be5 `add` \u7684\u6587\u4ef6**\n\n```bash\n# \u53d6\u6d88\u6682\u5b58\ngit restore --staged wrong-file.txt\n# \u6216\u8005\ngit reset HEAD wrong-file.txt\n```\n\n**3. `commit` \u9519\u4e86\u5206\u652f**\n\n```bash\ngit log --oneline -1           # \u8bb0\u4e0b hash\ngit checkout correct-branch\ngit cherry-pick <hash>         # \u6458\u8fc7\u53bb\ngit checkout wrong-branch\ngit reset --hard HEAD~1         # \u5220\u6389\u9519\u7684\n```\n\n**4. `push` \u88ab\u62d2\u7edd\uff08non-fast-forward\uff09**\n\n```bash\n# \u539f\u56e0\uff1a\u8fdc\u7a0b\u6709\u4f60\u7684\u672c\u5730\u6ca1\u6709\u7684 commit\n# \u4e0d\u8981\u76f4\u63a5 force push\uff01\ngit fetch origin\ngit rebase origin/main          # \u6216\u8005 merge\ngit push origin main\n```\n\n**5. \u5927\u6587\u4ef6\u5df2 `commit`\uff0c\u5373\u4f7f\u4e4b\u540e\u5220\u9664\uff0c\u4ed3\u5e93\u4ecd\u7136\u5f88\u5927**\n\n```bash\n# \u4ece\u5386\u53f2\u4e2d\u5f7b\u5e95\u5220\u9664\u5927\u6587\u4ef6\ngit filter-branch --force --index-filter \\\n  \"git rm --cached --ignore-unmatch path/to/huge-file.zip\" \\\n  --prune-empty --tag-name-filter cat -- --all\n\n# \u6216\u8005\u4f7f\u7528 BFG Repo-Cleaner\uff08\u66f4\u5feb\uff09\n# brew install bfg\n# bfg --delete-files huge-file.zip\n```\n\n### 9.2 Commit Message \u89c4\u8303\n\n**Conventional Commits\uff08\u63a8\u8350\uff09\uff1a**\n\n```\n<type>(<scope>): <subject>\n\n<body>\n\n<footer>\n```\n\n**\u7c7b\u578b\uff08type\uff09\uff1a**\n\n| Type | \u542b\u4e49 |\n|------|------|\n| `feat` | \u65b0\u529f\u80fd |\n| `fix` | Bug \u4fee\u590d |\n| `docs` | \u6587\u6863\u66f4\u65b0 |\n| `style` | \u4ee3\u7801\u683c\u5f0f\uff08\u4e0d\u5f71\u54cd\u903b\u8f91\uff09 |\n| `refactor` | \u91cd\u6784\uff08\u65e2\u975e\u65b0\u529f\u80fd\u4e5f\u975e\u4fee\u590d\uff09 |\n| `perf` | \u6027\u80fd\u4f18\u5316 |\n| `test` | \u6d4b\u8bd5\u76f8\u5173 |\n| `chore` | \u6784\u5efa/\u5de5\u5177/\u4f9d\u8d56\u66f4\u65b0 |\n| `ci` | CI \u914d\u7f6e\u53d8\u66f4 |\n\n**\u793a\u4f8b\uff1a**\n\n```\nfeat(login): add OAuth 2.0 support for Google\n\nImplemented Google OAuth 2.0 flow with PKCE extension.\nConfiguration via GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET env vars.\n\nCloses #42\nBREAKING CHANGE: Removed deprecated password auth endpoint\n```\n\n### 9.3 \u56e2\u961f\u534f\u4f5c\u5efa\u8bae\n\n**1. \u4fdd\u6301 PR \u5c0f\u800c\u4e13\u6ce8**\n\n```\n\u597d\uff1a\u4e00\u4e2a PR = \u4e00\u4e2a\u529f\u80fd / \u4e00\u4e2a\u4fee\u590d\n\u574f\uff1a\u4e00\u4e2a PR = \u767b\u5f55\u529f\u80fd + \u9996\u9875\u6539\u7248 + \u6570\u636e\u5e93\u8fc1\u79fb\n```\n\n\u5c0f PR \u5ba1\u67e5\u5feb\u3001\u51b2\u7a81\u5c11\u3001\u56de\u6eda\u5bb9\u6613\u3002\n\n**2. \u6bcf\u6b21 commit \u5e94\u8be5\u662f\u53ef\u5de5\u4f5c\u7684\u5355\u5143**\n\n```\n\u597d\uff1a\nabc1234 feat: add login form component\ndef5678 feat: add login API endpoint\nghi9012 feat: wire up login form to API\njkl0123 test: add login integration tests\n\n\u574f\uff1a\nabc1234 wip\ndef5678 fix stuff\nghi9012 more fixes\n```\n\n**3. \u4fdd\u62a4 main \u5206\u652f**\n\n```bash\n# \u7981\u6b62\u76f4\u63a5 push\n# \u8981\u6c42 PR + Review\n# \u8981\u6c42 CI \u901a\u8fc7\n# \u8981\u6c42\u7ebf\u6027\u5386\u53f2\uff08\u7981\u6b62 merge commit\uff09\n```\n\n**4. \u5206\u652f\u547d\u540d\u89c4\u8303**\n\n```\nfeature/login-oauth      # \u65b0\u529f\u80fd\nbugfix/login-timeout     # Bug \u4fee\u590d\nhotfix/critical-auth     # \u7d27\u6025\u4fee\u590d\nrelease/v2.0.0           # \u53d1\u5e03\u51c6\u5907\nchore/update-deps        # \u6742\u52a1\n```\n\n### 9.4 `.gitconfig` \u63a8\u8350\u914d\u7f6e\n\n```ini\n[user]\n    name = Frank\n    email = sunangie@126.com\n\n[core]\n    editor = vim\n    autocrlf = input          # macOS/Linux \u4f7f\u7528 LF \u6362\u884c\n    excludesfile = ~/.gitignore_global\n\n[alias]\n    lg = log --graph --oneline --all --decorate\n    lga = log --graph --oneline --all --decorate --author-date-order\n    st = status -s\n    df = diff --word-diff\n    br = branch\n    co = checkout\n    ci = commit\n\n[pull]\n    rebase = true             # pull \u9ed8\u8ba4\u4f7f\u7528 rebase \u800c\u975e merge\n\n[merge]\n    conflictstyle = diff3     # \u51b2\u7a81\u65f6\u663e\u793a\u4e09\u65b9\u5bf9\u6bd4\uff08\u66f4\u597d\u5b9a\u4f4d\uff09\n\n[diff]\n    colorMoved = zebra        # \u9ad8\u4eae\u79fb\u52a8\u7684\u4ee3\u7801\u5757\n\n[push]\n    default = current         # \u9ed8\u8ba4\u63a8\u9001\u5f53\u524d\u5206\u652f\n```\n\n---\n\n## \u9644\u5f55\uff1a\u901f\u67e5\u8868\n\n### \u64a4\u9500\u64cd\u4f5c\n\n| \u60f3\u505a\u4ec0\u4e48 | \u547d\u4ee4 |\n|----------|------|\n| \u4e22\u5f03\u5de5\u4f5c\u533a\u4fee\u6539 | `git restore file.txt` |\n| \u53d6\u6d88\u6682\u5b58 | `git restore --staged file.txt` |\n| \u4fee\u6539\u6700\u540e\u4e00\u6b21 commit | `git commit --amend` |\n| \u64a4\u9500 commit\uff08\u4fdd\u7559\u6539\u52a8\uff09 | `git reset --soft HEAD~1` |\n| \u64a4\u9500 commit\uff08\u4e22\u5f03\u6539\u52a8\uff09 | `git reset --hard HEAD~1` |\n| \u5b89\u5168\u64a4\u9500\u5df2 push \u7684 commit | `git revert abc1234` |\n\n### \u5206\u652f\u64cd\u4f5c\n\n| \u60f3\u505a\u4ec0\u4e48 | \u547d\u4ee4 |\n|----------|------|\n| \u521b\u5efa\u5e76\u5207\u6362\u5206\u652f | `git switch -c feature/x` |\n| \u5220\u9664\u672c\u5730\u5206\u652f | `git branch -d feature/x` |\n| \u5220\u9664\u8fdc\u7a0b\u5206\u652f | `git push origin --delete feature/x` |\n| \u91cd\u547d\u540d\u5206\u652f | `git branch -m old new` |\n| \u67e5\u770b\u6240\u6709\u5206\u652f | `git branch -a` |\n\n### \u8fdc\u7a0b\u64cd\u4f5c\n\n| \u60f3\u505a\u4ec0\u4e48 | \u547d\u4ee4 |\n|----------|------|\n| \u4e0b\u8f7d\u4f46\u4e0d\u5408\u5e76 | `git fetch origin` |\n| \u4e0b\u8f7d\u5e76\u5408\u5e76 | `git pull origin main` |\n| \u4e0b\u8f7d\u5e76\u53d8\u57fa | `git pull --rebase origin main` |\n| \u9996\u6b21\u63a8\u9001 | `git push -u origin main` |\n| \u5b89\u5168\u5f3a\u5236\u63a8\u9001 | `git push --force-with-lease` |\n\n---\n\n> **\u300c\u5bf9\u6297\u7126\u8651\u7684\u6700\u597d\u529e\u6cd5\uff0c\u662f\u4eb2\u624b\u6784\u5efa\u786e\u5b9a\u6027\u3002\u300d** \u2014 \u638c\u63e1 Git\uff0c\u5c31\u662f\u638c\u63e1\u4e86\u4ee3\u7801\u4e16\u754c\u7684\u786e\u5b9a\u6027\u3002\n\n---\n\n## \u8bb8\u53ef\n\nMIT License\n";
+(function() {
+  var f = document.getElementById('tocFloat');
+  var o = document.getElementById('tocOverlay');
+  var d = document.getElementById('tocDrawer');
+  var c = document.getElementById('tocClose');
+  var sidebar = document.getElementById('toc');
 
-  // Configure marked
-  marked.setOptions({
-    gfm: true,
-    breaks: false,
-    headerIds: true,
-    mangle: false,
-    smartLists: true
-  });
-
-  // Custom renderer for heading IDs (matches GitHub behavior)
-  const renderer = new marked.Renderer();
-  renderer.heading = function(text, level, raw) {
-    // Strip HTML tags from raw text
-    let id = raw.replace(/<[^>]*>/g, '')
-      .toLowerCase()
-      // Strip Chinese punctuation (GitHub strips these, doesn't replace with hyphens)
-      .replace(/[、，。：；！？「」『』【】《》（）""''、\,\.:;!\?\(\)\[\]{}'"“”]+/g, '')
-      // Replace remaining whitespace and non-alphanum (except CJK) with hyphens
-      .replace(/[^\w\u4e00-\u9fff]+/g, '-')
-      // Clean up leading/trailing hyphens and collapsing multiple hyphens
-      .replace(/-+/g, '-')
-      .replace(/^-+|-+$/g, '');
-    return `<h${level} id="${id}">${text}</h${level}>`;
-  };
-
-  // Render markdown
-  const html = marked.parse(md, { renderer });
-
-  // Extract frontmatter content (first <h1> is hero, already shown)
-  const main = document.getElementById('main');
-  main.innerHTML = html;
-
-  // Fix in-body TOC links to match generated heading IDs
-  // Build heading text → id map from rendered DOM
-  const headingMap = new Map();
-  main.querySelectorAll('h2, h3').forEach(h => {
-    headingMap.set(h.textContent.trim(), h.id);
-  });
-  // Find and fix TOC links (first <ul> containing # anchor links in content)
-  const tocList = main.querySelector('ul');
-  if (tocList) {
-    tocList.querySelectorAll('a[href^="#"]').forEach(a => {
-      const linkText = a.textContent.trim();
-      const targetId = headingMap.get(linkText);
-      if (targetId) {
-        a.setAttribute('href', '#' + targetId);
-      }
-    });
+  if (sidebar && d) {
+    var inner = sidebar.innerHTML.replace(/<h2>[\s\S]*?<\/h2>/, '');
+    d.insertAdjacentHTML('beforeend', inner);
   }
 
-  // Build sidebar TOC from h2 and h3 in content
-  const toc = document.getElementById('toc');
-  const headings = main.querySelectorAll('h2, h3');
-  let tocHtml = '<h2>目录</h2>';
+  function openToc() { o.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeToc() { o.classList.remove('open'); document.body.style.overflow = ''; }
 
-  headings.forEach(h => {
-    const id = h.id;
-    const text = h.textContent;
-    const cls = h.tagName === 'H3' ? 'toc-h3' : '';
-    tocHtml += `<a href="#${id}" class="${cls}">${text}</a>`;
-  });
+  if (f) f.addEventListener('click', openToc);
+  if (c) c.addEventListener('click', closeToc);
+  if (o) o.addEventListener('click', function(e) { if (e.target === o) closeToc(); });
+  if (d) d.addEventListener('click', function(e) { if (e.target.tagName === 'A') closeToc(); });
 
-  toc.innerHTML = tocHtml;
-
-  // Highlight active TOC item on scroll
-  const tocLinks = toc.querySelectorAll('a');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        tocLinks.forEach(a => a.classList.remove('active'));
-        const link = toc.querySelector(`a[href="#${entry.target.id}"]`);
-        if (link) link.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-80px 0px -80% 0px' });
-
-  headings.forEach(h => observer.observe(h));
-
-  // ─── Mobile TOC ───
-  const tocFloat = document.getElementById('tocFloat');
-  const tocOverlay = document.getElementById('tocOverlay');
-  const tocDrawer = document.getElementById('tocDrawer');
-  const tocClose = document.getElementById('tocClose');
-
-  // Populate mobile drawer with same TOC content
-  const drawerContent = toc.innerHTML;
-  tocDrawer.insertAdjacentHTML('beforeend', drawerContent);
-
-  function openToc() {
-    tocOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeToc() {
-    tocOverlay.classList.remove('open');
-    document.body.style.overflow = '';
+  var sLinks = document.querySelectorAll('.sidebar a');
+  var headings = document.querySelectorAll('.content h2, .content h3');
+  if (sLinks.length && headings.length) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          sLinks.forEach(function(a) { a.classList.remove('active'); });
+          var link = document.querySelector('.sidebar a[href="#' + entry.target.id + '"]');
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-80px 0px -80% 0px' });
+    headings.forEach(function(h) { obs.observe(h); });
   }
 
-  tocFloat.addEventListener('click', openToc);
-  tocClose.addEventListener('click', closeToc);
-  tocOverlay.addEventListener('click', function(e) {
-    if (e.target === tocOverlay) closeToc();
-  });
-  // Close drawer when a TOC link is clicked
-  tocDrawer.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', closeToc);
-  });
-
-  // ─── Wrap tables in scrollable containers for mobile ───
-  document.querySelectorAll('.content table').forEach(table => {
+  document.querySelectorAll('.content table').forEach(function(table) {
     if (!table.parentElement.classList.contains('table-wrap')) {
-      const wrap = document.createElement('div');
+      var wrap = document.createElement('div');
       wrap.className = 'table-wrap';
       wrap.style.cssText = 'overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;';
       table.parentNode.insertBefore(wrap, table);
@@ -465,6 +1623,5 @@
   });
 })();
 </script>
-
 </body>
 </html>
