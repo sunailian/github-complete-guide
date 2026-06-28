@@ -1,22 +1,9 @@
 {
-  "version": 2,
   "buildCommand": "",
   "outputDirectory": ".",
-  "cleanUrls": false,
+  "installCommand": "",
   "framework": null,
-  "headers": [
-    {
-      "source": "/README.md",
-      "headers": [
-        { "key": "Access-Control-Allow-Origin", "value": "*" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
-      ]
-    },
-    {
-      "source": "/*",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
-      ]
-    }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/$1" }
   ]
 }
