@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- VERSION: v3-static-fd7c04b — pre-rendered HTML, no JS rendering -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -1634,10 +1635,32 @@ chore/update-deps        # 杂务
 
 <script>
 (function() {
+  // ── Hash-based scroll on page load ──
+  if (location.hash) {
+    var el = document.querySelector(location.hash);
+    if (el) setTimeout(function() { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+  }
+
+  // ── Fallback: ensure all hash links scroll to target ──
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    if (!id) return;
+    var target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.pushState(null, '', '#' + id);
+      // Close mobile drawer if open
+      if (o && o.classList.contains('open')) closeToc();
+    }
+  });
+
+  // ── Mobile TOC drawer ──
   var f = document.getElementById('tocFloat');
   var o = document.getElementById('tocOverlay');
   var c = document.getElementById('tocClose');
-  var d = document.getElementById('tocDrawer');
 
   function openToc() { o.classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeToc() { o.classList.remove('open'); document.body.style.overflow = ''; }
@@ -1645,9 +1668,6 @@ chore/update-deps        # 杂务
   if (f) f.addEventListener('click', openToc);
   if (c) c.addEventListener('click', closeToc);
   if (o) o.addEventListener('click', function(e) { if (e.target === o) closeToc(); });
-  if (d) d.addEventListener('click', function(e) {
-    if (e.target.tagName === 'A') setTimeout(closeToc, 150);
-  });
 })();
 </script>
 </body>
